@@ -90,3 +90,15 @@ Reported by Dev. `chrome://gpu` as supplied: Chrome 156.0.8078.75, Android 13 (T
 - Default page (no query): the label read "wasm (WebGPU failed the self-test on this device)". Normal games of 174 and 110 steps; 5.60 ms/step (n=192) and 5.40 ms/step (n=143); the buttons steer; the board fits the screen.
 
 So on this phone, WebGPU returned numerically wrong outputs (probability errors up to about 1e-2, enough to flip some cells), and the self-test caught it in every case and fell back to WASM.
+
+## Live site, desktop check (2026-10-31)
+
+Reported by Dev. Chrome 156 on the Apple M2 Mac, https://devsutharsystems.github.io/neural-snake/ (the deployed pages, after the runtime self-test was added).
+
+| Page | Label shown | In-page median | Game |
+|---|---|---|---|
+| default page | `webgpu` (it passed the runtime self-test) | 12.30 ms/step (n=310) | a 256-step game ended in model game over |
+| `?backend=wasm` | `wasm (WASM forced by ?backend=wasm)` | 3.40 ms/step (n=223) | a 143-step game ended in model game over |
+
+- The in-page medians include drawing the board and the first steps after page load (shader compilation on WebGPU), so they are larger than the fair benchmark above (WebGPU 4.00 ms and WASM 0.80 ms per step). They are not comparable to it.
+- **Network-tab download check: not done.** The README's statement that a visitor downloads only one `.wasm` is therefore still derived from the bundle code (`docs/facts.md`), not measured.
