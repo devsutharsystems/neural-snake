@@ -16,6 +16,7 @@
   dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px 12px; margin: 8px 0; font-variant-numeric: tabular-nums; }
   dt { color: var(--muted); }
   dd { margin: 0; overflow-wrap: anywhere; }
+  #selftest { font: 11px/1.4 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; border: 1px solid var(--line); padding: 8px; margin: 8px 0; }
   #pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 320px; margin: 8px auto 16px; }
   #pad button { min-height: 64px; font-size: 28px; line-height: 1; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
   #pad .up { grid-column: 2; grid-row: 1; } #pad .left { grid-column: 1; grid-row: 2; } #pad .down { grid-column: 2; grid-row: 2; } #pad .right { grid-column: 3; grid-row: 2; }
@@ -42,8 +43,9 @@
     <dt>Steps this run</dt><dd id="steps">0</dd>
     <dt>Model outputs</dt><dd id="probs">-</dd>
   </dl>
+  <pre id="selftest" hidden></pre>
   <p><button id="restart" type="button">Restart (reload start state)</button></p>
-  <p class="muted">Backends: <a href="./index.html">WebGPU first</a> · <a href="./index.html?backend=wasm">force WASM</a> · <a href="./index.html?verbose=1">log node placement</a> (open the console and look for "Node placements") · <a href="./compare.html">compare with a real engine</a>. The model sometimes makes mistakes (for example food appearing on the snake); they are shown as produced, never corrected.</p>
+  <p class="muted">Backends: <a href="./index.html">WebGPU first</a> · <a href="./index.html?backend=wasm">force WASM</a> · <a href="./index.html?selftest=1">show the runtime self-test</a> · <a href="./index.html?verbose=1">log node placement</a> (open the console and look for "Node placements") · <a href="./compare.html">compare with a real engine</a>. The model sometimes makes mistakes (for example food appearing on the snake); they are shown as produced, never corrected.</p>
 </main>
 <script type="module" src="./main.js"></script>
 </body>

@@ -18,6 +18,7 @@
   dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px 12px; margin: 12px 0; font-variant-numeric: tabular-nums; }
   dt { color: var(--muted); }
   dd { margin: 0; overflow-wrap: anywhere; }
+  #selftest { font: 11px/1.4 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; border: 1px solid var(--line); padding: 8px; margin: 8px 0; }
   #pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 320px; margin: 12px auto 8px; }
   #pad button { min-height: 64px; font-size: 28px; line-height: 1; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
   #pad .up { grid-column: 2; grid-row: 1; } #pad .left { grid-column: 1; grid-row: 2; } #pad .down { grid-column: 2; grid-row: 2; } #pad .right { grid-column: 3; grid-row: 2; }
@@ -50,6 +51,7 @@
     <dt>Food sync (comparison aid)</dt><dd>After every eat by the real engine, the model board's food is replaced by the engine's food, so a wrong food guess does not mask later steps. The model's own food guess is never used on this page.</dd>
     <dt>Game over</dt><dd id="over">-</dd>
   </dl>
+  <pre id="selftest" hidden></pre>
   <p><button id="restart" type="button">Restart both</button> <a href="./index.html">Back to the game page (model only)</a></p>
 </main>
 <script type="module" src="./compare.js"></script>

@@ -1,6 +1,7 @@
 // Neural Snake main page. This file contains NO game rules: every next frame comes from the model (web/model/snake.onnx).
 // Every function carries a "// purpose:" line directly above it; scripts/audit_web.py prints them as the "what the JS still does" list.
 import { installControls } from './controls.js'; // on-screen buttons and swipe: they only call setPending(action), exactly like an arrow key
+import { chooseBackend, formatReports, errorText } from './selftest.js'; // runtime self-test: golden cases = the model's own recorded outputs, no game rules
 
 const N = 12;
 const TICK_MS = 150;
@@ -12,12 +13,14 @@ const BASE = new URL('./', import.meta.url);
 const VENDOR = new URL('vendor/', BASE).href;
 const MODEL_URL = new URL('model/snake.onnx', BASE).href;
 const START_URL = new URL('model/start_state.json', BASE).href;
+const SELFTEST_URL = new URL('model/selftest.json', BASE).href;
+const SELFTEST_PANEL = new URLSearchParams(location.search).get('selftest') === '1'; // ?selftest=1: show every golden case's result on the page
 
 // purpose: shorthand for document.getElementById.
 const el = (id) => document.getElementById(id);
 const canvas = el('board');
 const ctx = canvas.getContext('2d');
-const state = { ort: null, session: null, backend: null, note: '', grid: null, start: null, over: false, busy: false, pendingAction: NOOP, steps: 0, times: [] };
+const state = { ort: null, session: null, backend: null, note: '', reports: [], grid: null, start: null, over: false, busy: false, pendingAction: NOOP, steps: 0, times: [] };
 
 // purpose: fetch a JSON file that ships with the page (the engine-generated start state).
 async function loadJSON(url) {
@@ -37,20 +40,29 @@ async function openSession(bundle, provider) {
   return { ort, session };
 }
 
-// purpose: try a WebGPU session from the webgpu bundle first; only if that fails (or ?backend=wasm), import the wasm bundle and use WASM. Records which one is really running.
+// purpose: open a session for one named backend (the webgpu bundle for 'webgpu', the wasm bundle for 'wasm'); the self-tested backend chooser calls this.
+function openBackend(name) {
+  return name === 'webgpu' ? openSession('ort.webgpu.min.mjs', 'webgpu') : openSession('ort.wasm.min.mjs', 'wasm');
+}
+
+// purpose: load the golden cases and choose the backend: WebGPU first, kept only if it passes the self-test, else WASM (also self-tested; if it fails too we throw and the page does not play). Records which backend runs and why.
 async function createSession() {
-  const forceWasm = new URLSearchParams(location.search).get('backend') === 'wasm';
-  let note = forceWasm ? 'WASM forced by ?backend=wasm' : '';
-  if (!forceWasm) {
-    try {
-      Object.assign(state, await openSession('ort.webgpu.min.mjs', 'webgpu'), { backend: 'webgpu' });
-      return note;
-    } catch (e) {
-      note = 'WebGPU unavailable (' + String((e && e.message) || e).slice(0, 140) + '), fell back to WASM';
-    }
+  const selftest = await loadJSON(SELFTEST_URL);
+  try {
+    const r = await chooseBackend({ open: openBackend, selftest, forceWasm: new URLSearchParams(location.search).get('backend') === 'wasm', testBoth: SELFTEST_PANEL });
+    Object.assign(state, { ort: r.ort, session: r.session, backend: r.backend, reports: r.reports });
+    return r.note;
+  } catch (e) {
+    state.reports = e.reports || [];
+    throw e;
   }
-  Object.assign(state, await openSession('ort.wasm.min.mjs', 'wasm'), { backend: 'wasm' });
-  return note;
+}
+
+// purpose: with ?selftest=1, show the result of every golden case on every backend tried (pass / fail, differing cells, max probability difference) so it can be screenshotted.
+function renderSelfTestPanel() {
+  if (!SELFTEST_PANEL) return;
+  el('selftest').hidden = false;
+  el('selftest').textContent = formatReports(state.reports, 'Self-test ' + new Date().toISOString() + '\nuserAgent: ' + navigator.userAgent);
 }
 
 // purpose: paint the current class grid onto the canvas, one coloured square per cell (class to colour lookup only).
@@ -141,10 +153,13 @@ async function main() {
   try {
     state.note = await createSession();
   } catch (e) {
-    el('backend').textContent = 'no backend could load the model: ' + String((e && e.message) || e);
+    el('backend').textContent = 'not playing: ' + errorText(e);
+    el('banner').textContent = 'No backend passed the self-test (or could load the model), so the page does not play. Open ?selftest=1 for the details.';
+    renderSelfTestPanel();
     return;
   }
   renderStatus(null);
+  renderSelfTestPanel();
   window.addEventListener('keydown', onKey);
   installControls({ buttons: document.querySelectorAll('#pad button'), swipeTargets: [canvas], onAction: setPending });
   el('restart').addEventListener('click', restart);

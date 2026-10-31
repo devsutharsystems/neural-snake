@@ -66,3 +66,13 @@ def test_controls_js_may_not_reference_engine(tmp_path):
     (tmp_path / "controls.js").write_text("// purpose: x\nimport { Engine } from './engine.js';\nexport function f() {}\n")
     r = audit_web.audit(str(tmp_path))
     assert "controls.js" in r["engine_references_in_main_page"] and not r["ok"]
+
+
+def test_selftest_js_is_inventoried_needs_purpose_lines_and_may_not_reference_engine(tmp_path):
+    (tmp_path / "selftest.js").write_text("// purpose: ok\nexport async function good() {}\nexport async function bad() {}\n")
+    r = audit_web.audit(str(tmp_path))
+    assert [n for n, _ in r["modules"]["selftest.js"]["functions"]] == ["good"]
+    assert r["modules"]["selftest.js"]["missing_purpose"] == ["bad"] and not r["ok"]
+    (tmp_path / "selftest.js").write_text("// purpose: x\nimport { Engine } from './engine.js';\nexport function f() {}\n")
+    r = audit_web.audit(str(tmp_path))
+    assert "selftest.js" in r["engine_references_in_main_page"] and not r["ok"]

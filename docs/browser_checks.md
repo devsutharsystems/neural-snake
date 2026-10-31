@@ -53,3 +53,16 @@ Caveats:
 - Memory pressure on the machine was not recorded.
 - Session-create times are dominated by the first run's cold start (424.1 ms) and vary a lot between runs.
 - This benchmark is more reliable than the in-page medians above (9.10 ms WebGPU and 3.20 ms WASM), which include the first steps after page load.
+
+## Real device: Samsung S20+ 5G (Android), reported by Dev on 2026-10-31
+
+Model: the shipped `snake.onnx` (sha256 `baf94b18…`), page as deployed before the runtime self-test existed.
+
+| Browser | Page / backend | What was seen |
+|---|---|---|
+| Chrome | default page, backend "webgpu" | frames wrong within 6 steps: 6 food cells, head separated from body, model game over at step 6; 33.7 and 38.5 ms/step |
+| Brave | default page, backend "webgpu" | the identical wrong frames |
+| Brave | `?backend=wasm` | correct: a normal snake, one food, an 81-step game; 4.40 ms/step |
+| Chrome | `?backend=wasm` | retest pending |
+
+Reading: the same `snake.onnx` is exact on desktop WebGPU and WASM and in Python (`web/model/parity_results.json`; held-out evaluation), and the phone's WASM run is correct, so this device's WebGPU path returned wrong numbers. It is not specific to one browser (Chrome and Brave agree). The cause is not determined; the GPU details from `chrome://gpu` have not been supplied, so no GPU is named here. The page now runs 8 recorded golden cases after creating each session and falls back to WASM if WebGPU fails them (`web/selftest.js`); whether that detects this device's failure has not been confirmed on the phone yet.

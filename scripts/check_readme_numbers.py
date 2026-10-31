@@ -143,6 +143,7 @@ def facts(src):
     f.append(pct(float(m.group(1)), 2))
     f.append(f"{load('spikes/spike_a/diag_run2.json')['food_uniform_floor_mean_ln_empty']:.2f}")
     f.append(f"{round(load('spikes/spike_a/results_run2.json')['seconds']):,} s")
+    f.append(f"{len(load('web/model/selftest.json')['cases'])} recorded cases")  # the self-test case count quoted in the README
     p0 = load("spikes/spike_a/results.json")  # Phase 0 (two throwaway models, data/spike_a held-out rows)
     f += [pct(p0["R1"]["one_step"]["all"]["model_grid_exact"], 1), pct(p0["R2"]["one_step"]["all"]["model_grid_exact"], 1),
           pct(p0["R1"]["one_step"]["all"]["model_full_state_exact(grid+order+dir)"], 1)]
@@ -154,7 +155,8 @@ def facts(src):
 
 
 # numbers quoted from docs/browser_checks.md (manual Chrome results): the string must be in BOTH that file and the README
-BROWSER_FACTS = ("9.10 ms", "3.20 ms", "Number of nodes: 74", "Chrome 156.0.8078.76", "0 of 132")
+BROWSER_FACTS = ("9.10 ms", "3.20 ms", "Number of nodes: 74", "Chrome 156.0.8078.76", "0 of 132",
+                 "Samsung S20+ 5G", "33.7 and 38.5 ms/step", "4.40 ms/step", "81-step game", "6 food cells")
 
 
 def check(readme, src=None):
@@ -173,7 +175,7 @@ def check(readme, src=None):
             problems.append(f"docs/browser_checks.md lacks '{s}'")
         if s not in readme:
             problems.append(f"browser fact: README lacks '{s}'")
-    for js in ("main.js", "controls.js"):  # every function of the game page's JS, including the touch / swipe input module, must be listed
+    for js in ("main.js", "controls.js", "selftest.js"):  # every function of the game page's JS, including the shared input and self-test modules, must be listed
         funcs, _ = audit_web.inventory(os.path.join(ROOT, "web", js))
         for name, _ in funcs:
             if f"{name}()" not in readme:

@@ -23,7 +23,10 @@ ALLOWED = {"vendor/ort.wasm.min.mjs": {b"https://web.dev/cross-origin-isolation-
            "vendor/ort.webgpu.min.mjs": {b"https://web.dev/cross-origin-isolation-guide/"},
            "vendor/ort-wasm-simd-threaded.wasm": WASM_STRINGS, "vendor/ort-wasm-simd-threaded.asyncify.wasm": WASM_STRINGS}
 # the main game page must contain no game rules, so it (and the input module it shares with compare.html) may not touch web/engine.js
-NO_ENGINE_FILES = ("index.html", "main.js", "controls.js")
+NO_ENGINE_FILES = ("index.html", "main.js", "controls.js", "selftest.js")
+# modules shared by the game page and compare.html: each is inventoried and every function needs a purpose line
+SHARED_MODULES = {"controls.js": "Touch / swipe / button input (web/controls.js, shared with compare.html; it only reports an action index)",
+                  "selftest.js": "Runtime self-test and backend choice (web/selftest.js, shared with compare.html; compares the model with its own recorded outputs)"}
 ENGINE_RE = re.compile(r"engine\.js|(?:from|import\s*\()\s*['\"][^'\"]*engine")
 FUNC_RE = re.compile(r"^\s*(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(|^\s*(?:export\s+)?const\s+(\w+)\s*=\s*(?:async\s*)?(?:\([^)]*\)|\w+)\s*=>")
 
@@ -77,13 +80,16 @@ def audit(web_dir):
     funcs, missing = inventory(js) if os.path.exists(js) else ([], [])
     cmp_js = os.path.join(web_dir, "compare.js")
     cmp_missing = inventory(cmp_js)[1] if os.path.exists(cmp_js) else []
-    ctl_js = os.path.join(web_dir, "controls.js")
-    ctl_funcs, ctl_missing = inventory(ctl_js) if os.path.exists(ctl_js) else ([], [])
+    modules = {}
+    for name in SHARED_MODULES:
+        p = os.path.join(web_dir, name)
+        modules[name] = inventory(p) if os.path.exists(p) else ([], [])
     engine_refs = engine_references(web_dir)
     return {"external_urls": bad, "allowed_url_hits": allowed_hits, "functions": funcs, "functions_missing_purpose": missing,
-            "controls_functions": ctl_funcs, "controls_functions_missing_purpose": ctl_missing,
+            "modules": {n: {"functions": f, "missing_purpose": m} for n, (f, m) in modules.items()},
+            "controls_functions": modules["controls.js"][0], "controls_functions_missing_purpose": modules["controls.js"][1],
             "compare_functions_missing_purpose": cmp_missing, "engine_references_in_main_page": engine_refs,
-            "ok": not bad and not missing and not cmp_missing and not ctl_missing and not engine_refs}
+            "ok": not bad and not missing and not cmp_missing and not any(m for _, m in modules.values()) and not engine_refs}
 
 
 def main():
@@ -101,14 +107,15 @@ def main():
         print(f"  {name}() - {purpose}")
     for name in r["functions_missing_purpose"]:
         print(f"  MISSING PURPOSE LINE: {name}()")
-    print("\nTouch / swipe / button input (web/controls.js, shared with compare.html; it only reports an action index):")
-    for name, purpose in r["controls_functions"]:
-        print(f"  {name}() - {purpose}")
-    for name in r["controls_functions_missing_purpose"]:
-        print(f"  MISSING PURPOSE LINE in controls.js: {name}()")
+    for mod, title in SHARED_MODULES.items():
+        print(f"\n{title}:")
+        for name, purpose in r["modules"][mod]["functions"]:
+            print(f"  {name}() - {purpose}")
+        for name in r["modules"][mod]["missing_purpose"]:
+            print(f"  MISSING PURPOSE LINE in {mod}: {name}()")
     for name in r["compare_functions_missing_purpose"]:
         print(f"  MISSING PURPOSE LINE in compare.js: {name}()")
-    print("\nengine.js references in index.html / main.js / controls.js: " + (", ".join(r["engine_references_in_main_page"]) + "  <- FORBIDDEN" if r["engine_references_in_main_page"] else "none (compare.html / compare.js may use it)"))
+    print("\nengine.js references in index.html / main.js / controls.js / selftest.js: " + (", ".join(r["engine_references_in_main_page"]) + "  <- FORBIDDEN" if r["engine_references_in_main_page"] else "none (compare.html / compare.js may use it)"))
     print("\nAUDIT " + ("PASSED" if r["ok"] else "FAILED"))
     return 0 if r["ok"] else 1
 
