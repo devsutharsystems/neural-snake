@@ -1,0 +1,31 @@
+{
+ "command": "v3.py overfit dil mps 180.0",
+ "arch": "dil",
+ "device": "mps",
+ "rows": 1000,
+ "steps": 1761,
+ "seconds": 60.6,
+ "samples_per_s": 7435,
+ "final_exact": 0.997,
+ "reached_99": true,
+ "curve": [
+  {
+   "t_s": 30.2,
+   "step": 881,
+   "samples_per_s": 7456,
+   "loss": 0.0119,
+   "exact": 0.832,
+   "ate_acc": 1.0
+  },
+  {
+   "t_s": 60.5,
+   "step": 1761,
+   "samples_per_s": 7451,
+   "loss": 0.0462,
+   "exact": 0.997,
+   "ate_acc": 1.0
+  }
+ ],
+ "n_eat_rows": 74,
+ "n_over_rows": 17
+}

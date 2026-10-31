@@ -1,0 +1,240 @@
+{
+ "seconds_per_model": 300.0,
+ "device": "mps",
+ "n_train": 30907,
+ "n_val": 10374,
+ "pos_weight_game_over": 73.29566955566406,
+ "r2_information_limit_val": {
+  "transitions": 10374,
+  "ambiguous_tail": 278,
+  "search_capped_undetermined": 200,
+  "pct_ambiguous": 2.68,
+  "pct_ambiguous_or_capped_upper_bound": 4.608
+ },
+ "R1v2": {
+  "train": {
+   "params": 75253,
+   "steps": 3747,
+   "train_wall_s": 300.0,
+   "device": "mps",
+   "pos_weight_game_over": 73.29566955566406,
+   "final_loss": 1.558288812637329
+  },
+  "val": {
+   "exact": {
+    "1-3": {
+     "n": 3964,
+     "baseline_copy_prev_4class": 0.019677093844601413,
+     "model_exact": 0.6740665993945509,
+     "baseline_copy_prev_14class": 0.013118062563067608,
+     "model_type_collapsed_exact(4class)": 0.7045913218970736
+    },
+    "4-7": {
+     "n": 1928,
+     "baseline_copy_prev_4class": 0.011929460580912862,
+     "model_exact": 0.5554979253112033,
+     "baseline_copy_prev_14class": 0.005186721991701245,
+     "model_type_collapsed_exact(4class)": 0.6815352697095436
+    },
+    "8-15": {
+     "n": 1799,
+     "baseline_copy_prev_4class": 0.012229016120066704,
+     "model_exact": 0.45969983324068925,
+     "baseline_copy_prev_14class": 0.007226236798221234,
+     "model_type_collapsed_exact(4class)": 0.5925514174541412
+    },
+    "16+": {
+     "n": 2683,
+     "baseline_copy_prev_4class": 0.006708907938874394,
+     "model_exact": 0.2508386134923593,
+     "baseline_copy_prev_14class": 0.005963473723443906,
+     "model_type_collapsed_exact(4class)": 0.4140887066716362
+    },
+    "all": {
+     "n": 10374,
+     "baseline_copy_prev_4class": 0.013591671486408328,
+     "model_exact": 0.5053981106612686,
+     "baseline_copy_prev_14class": 0.008771929824561403,
+     "model_type_collapsed_exact(4class)": 0.6057451320609215
+    }
+   },
+   "per_cell_error": {
+    "empty": {
+     "cells": 1372399,
+     "pct_wrong_14class": 0.146,
+     "pct_wrong_type_only": 0.146
+    },
+    "food": {
+     "cells": 9535,
+     "pct_wrong_14class": 11.673,
+     "pct_wrong_type_only": 11.673
+    },
+    "head": {
+     "cells": 10374,
+     "pct_wrong_14class": 5.388,
+     "pct_wrong_type_only": 5.36
+    },
+    "body": {
+     "cells": 93518,
+     "pct_wrong_14class": 4.51,
+     "pct_wrong_type_only": 0.86
+    },
+    "tail": {
+     "cells": 8030,
+     "pct_wrong_14class": 27.945,
+     "pct_wrong_type_only": 18.481
+    }
+   },
+   "game_over": {
+    "n_true": 141,
+    "predicted": 143,
+    "precision": 0.916083916083916,
+    "recall": 0.9290780141843972
+   },
+   "food_spawn_on_empty_pct": 100.0,
+   "n_eat_steps": 839
+  },
+  "rollout_bfs": {
+   "kind": "bfs",
+   "n": 50,
+   "first_mismatch_median": 1.5,
+   "first_mismatch_p10": 1.0,
+   "first_type_mismatch_median": 2.0,
+   "first_type_mismatch_p10": 1.0,
+   "no_mismatch_within_20": 0,
+   "matched_to_end": 0,
+   "first_invalid_median": 2.0,
+   "first_invalid_p10": 1.0,
+   "no_invalid_within_20": 0,
+   "invalid_reasons": {
+    "wrong_length": 29,
+    "heads!=1": 21
+   },
+   "note": "21 = censored (no event in 20 steps)"
+  },
+  "rollout_random_safe": {
+   "kind": "random",
+   "n": 50,
+   "first_mismatch_median": 1.0,
+   "first_mismatch_p10": 1.0,
+   "first_type_mismatch_median": 1.0,
+   "first_type_mismatch_p10": 1.0,
+   "no_mismatch_within_20": 1,
+   "matched_to_end": 0,
+   "first_invalid_median": 2.0,
+   "first_invalid_p10": 1.0,
+   "no_invalid_within_20": 1,
+   "invalid_reasons": {
+    "heads!=1": 35,
+    "wrong_length": 14
+   },
+   "note": "21 = censored (no event in 20 steps)"
+  }
+ },
+ "R2": {
+  "train": {
+   "params": 73195,
+   "steps": 4087,
+   "train_wall_s": 300.0,
+   "device": "mps",
+   "pos_weight_game_over": 73.29566955566406,
+   "final_loss": 1.8992664813995361
+  },
+  "val": {
+   "exact": {
+    "1-3": {
+     "n": 3964,
+     "baseline_copy_prev_4class": 0.019677093844601413,
+     "model_exact": 0.741422805247225
+    },
+    "4-7": {
+     "n": 1928,
+     "baseline_copy_prev_4class": 0.011929460580912862,
+     "model_exact": 0.4994813278008299
+    },
+    "8-15": {
+     "n": 1799,
+     "baseline_copy_prev_4class": 0.012229016120066704,
+     "model_exact": 0.3629794330183435
+    },
+    "16+": {
+     "n": 2683,
+     "baseline_copy_prev_4class": 0.006708907938874394,
+     "model_exact": 0.16921356690272082
+    },
+    "all": {
+     "n": 10374,
+     "baseline_copy_prev_4class": 0.013591671486408328,
+     "model_exact": 0.48284171968382494
+    }
+   },
+   "per_cell_error": {
+    "empty": {
+     "cells": 1372399,
+     "pct_wrong": 0.295
+    },
+    "food": {
+     "cells": 9535,
+     "pct_wrong": 13.781
+    },
+    "head": {
+     "cells": 10374,
+     "pct_wrong": 6.96
+    },
+    "body": {
+     "cells": 93518,
+     "pct_wrong": 3.616
+    },
+    "tail": {
+     "cells": 8030,
+     "pct_wrong": 17.821
+    }
+   },
+   "game_over": {
+    "n_true": 141,
+    "predicted": 141,
+    "precision": 0.900709219858156,
+    "recall": 0.900709219858156
+   },
+   "food_spawn_on_empty_pct": 99.88,
+   "n_eat_steps": 839
+  },
+  "rollout_bfs": {
+   "kind": "bfs",
+   "n": 50,
+   "first_mismatch_median": 1.0,
+   "first_mismatch_p10": 1.0,
+   "first_type_mismatch_median": 1.0,
+   "first_type_mismatch_p10": 1.0,
+   "no_mismatch_within_20": 0,
+   "matched_to_end": 0,
+   "first_invalid_median": 1.0,
+   "first_invalid_p10": 1.0,
+   "no_invalid_within_20": 0,
+   "invalid_reasons": {
+    "wrong_length": 26,
+    "disconnected": 1,
+    "heads!=1": 23
+   },
+   "note": "21 = censored (no event in 20 steps)"
+  },
+  "rollout_random_safe": {
+   "kind": "random",
+   "n": 50,
+   "first_mismatch_median": 1.5,
+   "first_mismatch_p10": 1.0,
+   "first_type_mismatch_median": 1.5,
+   "first_type_mismatch_p10": 1.0,
+   "no_mismatch_within_20": 2,
+   "matched_to_end": 0,
+   "first_invalid_median": 2.0,
+   "first_invalid_p10": 1.0,
+   "no_invalid_within_20": 2,
+   "invalid_reasons": {
+    "heads!=1": 29,
+    "wrong_length": 19
+   },
+   "note": "21 = censored (no event in 20 steps)"
+  }
+ }
+}

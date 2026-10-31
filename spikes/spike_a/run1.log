@@ -1,0 +1,211 @@
+loaded train old=30907 new=400644 total=431551 val=10374 (1s)
+made 14-class grids (18s)
+t=300s step=9205 loss=4.8046 samples/s=7848 val2000={'overall': 0.9725, 'eat': 0.9467, 'non_eat': 0.9749}
+t=601s step=18132 loss=4.5575 samples/s=7730 val2000={'overall': 0.875, 'eat': 0.8107, 'non_eat': 0.8809}
+checkpoint /Users/devsuthar/Documents/Lets Data Science/week6/neural-snake/spikes/spike_a/../../checkpoints/run1_10min.pt
+t=901s step=25373 loss=4.1945 samples/s=7211 val2000={'overall': 0.831, 'eat': 0.7633, 'non_eat': 0.8372}
+t=1201s step=34761 loss=3.8923 samples/s=7409 val2000={'overall': 0.81, 'eat': 0.6627, 'non_eat': 0.8236}
+checkpoint /Users/devsuthar/Documents/Lets Data Science/week6/neural-snake/spikes/spike_a/../../checkpoints/run1_20min.pt
+t=1501s step=44059 loss=3.9738 samples/s=7513 val2000={'overall': 0.7935, 'eat': 0.6509, 'non_eat': 0.8067}
+t=1802s step=52813 loss=3.3629 samples/s=7505 val2000={'overall': 0.782, 'eat': 0.6509, 'non_eat': 0.7941}
+checkpoint /Users/devsuthar/Documents/Lets Data Science/week6/neural-snake/spikes/spike_a/../../checkpoints/run1_30min.pt
+t=2102s step=60835 loss=3.5826 samples/s=7410 val2000={'overall': 0.766, 'eat': 0.6391, 'non_eat': 0.7777}
+t=2402s step=69251 loss=3.6431 samples/s=7380 val2000={'overall': 0.764, 'eat': 0.6036, 'non_eat': 0.7788}
+checkpoint /Users/devsuthar/Documents/Lets Data Science/week6/neural-snake/spikes/spike_a/../../checkpoints/run1_40min.pt
+t=2702s step=76647 loss=3.5942 samples/s=7261 val2000={'overall': 0.755, 'eat': 0.5858, 'non_eat': 0.7706}
+t=3003s step=84678 loss=2.9844 samples/s=7219 val2000={'overall': 0.7525, 'eat': 0.574, 'non_eat': 0.769}
+checkpoint /Users/devsuthar/Documents/Lets Data Science/week6/neural-snake/spikes/spike_a/../../checkpoints/run1_50min.pt
+t=3303s step=89840 loss=2.6140 samples/s=6963 val2000={'overall': 0.745, 'eat': 0.5562, 'non_eat': 0.7624}
+/Users/devsuthar/Documents/Lets Data Science/week6/neural-snake/spikes/spike_a/v3.py:266: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:821.)
+  return step, time.time() - t0, float(loss)
+final checkpoint /Users/devsuthar/Documents/Lets Data Science/week6/neural-snake/spikes/spike_a/../../checkpoints/run1_final.pt
+{
+ "command": "run1.py train 3600.0",
+ "n_train": 431551,
+ "n_train_old": 30907,
+ "n_train_new": 400644,
+ "n_val": 10374,
+ "steps": 96953,
+ "seconds": 3600.3,
+ "samples_per_s": 6894,
+ "final_loss": 2.7104,
+ "prior_shifts": {
+  "over_shift": 2.903445437722491,
+  "over_shift_info": {
+   "batch_rate": 0.2073,
+   "natural_train_rate": 0.0141
+  },
+  "ate_shift": 1.330590941175432,
+  "ate_shift_info": {
+   "batch_rate": 0.2473,
+   "natural_train_rate": 0.0799
+  }
+ },
+ "val2000_curve": [
+  {
+   "t_s": 300,
+   "step": 9205,
+   "loss": 4.8046,
+   "val2000": {
+    "overall": 0.9725,
+    "eat": 0.9467,
+    "non_eat": 0.9749
+   }
+  },
+  {
+   "t_s": 601,
+   "step": 18132,
+   "loss": 4.5575,
+   "val2000": {
+    "overall": 0.875,
+    "eat": 0.8107,
+    "non_eat": 0.8809
+   }
+  },
+  {
+   "t_s": 901,
+   "step": 25373,
+   "loss": 4.1945,
+   "val2000": {
+    "overall": 0.831,
+    "eat": 0.7633,
+    "non_eat": 0.8372
+   }
+  },
+  {
+   "t_s": 1201,
+   "step": 34761,
+   "loss": 3.8923,
+   "val2000": {
+    "overall": 0.81,
+    "eat": 0.6627,
+    "non_eat": 0.8236
+   }
+  },
+  {
+   "t_s": 1501,
+   "step": 44059,
+   "loss": 3.9738,
+   "val2000": {
+    "overall": 0.7935,
+    "eat": 0.6509,
+    "non_eat": 0.8067
+   }
+  },
+  {
+   "t_s": 1802,
+   "step": 52813,
+   "loss": 3.3629,
+   "val2000": {
+    "overall": 0.782,
+    "eat": 0.6509,
+    "non_eat": 0.7941
+   }
+  },
+  {
+   "t_s": 2102,
+   "step": 60835,
+   "loss": 3.5826,
+   "val2000": {
+    "overall": 0.766,
+    "eat": 0.6391,
+    "non_eat": 0.7777
+   }
+  },
+  {
+   "t_s": 2402,
+   "step": 69251,
+   "loss": 3.6431,
+   "val2000": {
+    "overall": 0.764,
+    "eat": 0.6036,
+    "non_eat": 0.7788
+   }
+  },
+  {
+   "t_s": 2702,
+   "step": 76647,
+   "loss": 3.5942,
+   "val2000": {
+    "overall": 0.755,
+    "eat": 0.5858,
+    "non_eat": 0.7706
+   }
+  },
+  {
+   "t_s": 3003,
+   "step": 84678,
+   "loss": 2.9844,
+   "val2000": {
+    "overall": 0.7525,
+    "eat": 0.574,
+    "non_eat": 0.769
+   }
+  },
+  {
+   "t_s": 3303,
+   "step": 89840,
+   "loss": 2.614,
+   "val2000": {
+    "overall": 0.745,
+    "eat": 0.5562,
+    "non_eat": 0.7624
+   }
+  }
+ ],
+ "rollout_cap_steps": 200,
+ "rollout_bfs": {
+  "kind": "bfs",
+  "n": 100,
+  "first_mismatch_median": 4.0,
+  "first_mismatch_p10": 1.0,
+  "first_type_mismatch_median": 5.0,
+  "first_type_mismatch_p10": 1.0,
+  "no_mismatch_within_20": 0,
+  "matched_to_end": 0,
+  "first_invalid_median": 5.5,
+  "first_invalid_p10": 1.0,
+  "no_invalid_within_20": 0,
+  "invalid_reasons": {
+   "disconnected": 3,
+   "heads!=1": 21,
+   "wrong_length": 76
+  },
+  "note": "201 = censored (no event within the 200-step cap)"
+ },
+ "rollout_random_safe": {
+  "kind": "random",
+  "n": 100,
+  "first_mismatch_median": 3.0,
+  "first_mismatch_p10": 1.0,
+  "first_type_mismatch_median": 3.5,
+  "first_type_mismatch_p10": 1.0,
+  "no_mismatch_within_20": 0,
+  "matched_to_end": 0,
+  "first_invalid_median": 4.0,
+  "first_invalid_p10": 1.0,
+  "no_invalid_within_20": 0,
+  "invalid_reasons": {
+   "disconnected": 3,
+   "heads!=1": 39,
+   "wrong_length": 58
+  },
+  "note": "201 = censored (no event within the 200-step cap)"
+ },
+ "rollout_seconds": 56.1,
+ "implied_median_from_p": {
+  "overall_exact": {
+   "p": 0.758,
+   "median_steps": 2.5
+  },
+  "non_eat_exact": {
+   "p": 0.775,
+   "median_steps": 2.72
+  },
+  "bucket_balanced_exact": {
+   "p": 0.7416,
+   "median_steps": 2.32
+  }
+ }
+}

@@ -1,0 +1,276 @@
+step 1608 t=60s loss=2.4374 samples/s=6840
+step 3911 t=120s loss=0.6086 samples/s=8314
+step 5646 t=181s loss=0.4699 samples/s=8000
+step 7466 t=241s loss=0.4225 samples/s=7933
+step 9127 t=301s loss=0.1496 samples/s=7757
+step 10812 t=361s loss=0.1767 samples/s=7657
+step 12462 t=422s loss=0.1465 samples/s=7564
+step 14107 t=482s loss=0.0835 samples/s=7492
+step 15792 t=542s loss=0.2153 samples/s=7455
+/Users/devsuthar/Documents/Lets Data Science/week6/neural-snake/spikes/spike_a/v3.py:266: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:821.)
+  return step, time.time() - t0, float(loss)
+{
+ "command": "v3.py full dil mps 600.0",
+ "arch": "dil",
+ "device": "mps",
+ "params": 78177,
+ "steps": 17401,
+ "seconds": 600.2,
+ "samples_per_s": 7421,
+ "final_loss": 0.1281,
+ "prior_shifts": {
+  "over_shift": 2.948253104037718,
+  "over_shift_info": {
+   "batch_rate": 0.2065,
+   "natural_train_rate": 0.0135
+  },
+  "ate_shift": 1.3706786333040246,
+  "ate_shift_info": {
+   "batch_rate": 0.2489,
+   "natural_train_rate": 0.0776
+  }
+ },
+ "n_train": 30907,
+ "n_val": 10374,
+ "train_eat_rate": 0.0776,
+ "train_over_rate": 0.0135,
+ "val_eat_rate": 0.0809,
+ "val_over_rate": 0.0136,
+ "val": {
+  "exact": {
+   "1-3": {
+    "all_steps": {
+     "n": 3964,
+     "model_exact": 0.922,
+     "model_exact_and_over_flag": 0.9218,
+     "copy14": 0.0131,
+     "copy4": 0.0197,
+     "model_type_collapsed_exact": 0.9329
+    },
+    "eat_steps": {
+     "n": 218,
+     "model_exact": 0.789,
+     "model_exact_and_over_flag": 0.789,
+     "copy14": 0.0,
+     "copy4": 0.0,
+     "model_type_collapsed_exact": 0.8394
+    },
+    "non_eat_steps": {
+     "n": 3746,
+     "model_exact": 0.9298,
+     "model_exact_and_over_flag": 0.9295,
+     "copy14": 0.0139,
+     "copy4": 0.0208,
+     "model_type_collapsed_exact": 0.9383
+    }
+   },
+   "4-7": {
+    "all_steps": {
+     "n": 1928,
+     "model_exact": 0.8449,
+     "model_exact_and_over_flag": 0.8439,
+     "copy14": 0.0052,
+     "copy4": 0.0119,
+     "model_type_collapsed_exact": 0.8968
+    },
+    "eat_steps": {
+     "n": 192,
+     "model_exact": 0.6667,
+     "model_exact_and_over_flag": 0.6667,
+     "copy14": 0.0,
+     "copy4": 0.0,
+     "model_type_collapsed_exact": 0.7031
+    },
+    "non_eat_steps": {
+     "n": 1736,
+     "model_exact": 0.8646,
+     "model_exact_and_over_flag": 0.8635,
+     "copy14": 0.0058,
+     "copy4": 0.0132,
+     "model_type_collapsed_exact": 0.9182
+    }
+   },
+   "8-15": {
+    "all_steps": {
+     "n": 1799,
+     "model_exact": 0.8016,
+     "model_exact_and_over_flag": 0.801,
+     "copy14": 0.0072,
+     "copy4": 0.0122,
+     "model_type_collapsed_exact": 0.8749
+    },
+    "eat_steps": {
+     "n": 189,
+     "model_exact": 0.4603,
+     "model_exact_and_over_flag": 0.455,
+     "copy14": 0.0,
+     "copy4": 0.0,
+     "model_type_collapsed_exact": 0.5503
+    },
+    "non_eat_steps": {
+     "n": 1610,
+     "model_exact": 0.8416,
+     "model_exact_and_over_flag": 0.8416,
+     "copy14": 0.0081,
+     "copy4": 0.0137,
+     "model_type_collapsed_exact": 0.913
+    }
+   },
+   "16+": {
+    "all_steps": {
+     "n": 2683,
+     "model_exact": 0.6284,
+     "model_exact_and_over_flag": 0.628,
+     "copy14": 0.006,
+     "copy4": 0.0067,
+     "model_type_collapsed_exact": 0.8021
+    },
+    "eat_steps": {
+     "n": 240,
+     "model_exact": 0.3042,
+     "model_exact_and_over_flag": 0.3042,
+     "copy14": 0.0,
+     "copy4": 0.0,
+     "model_type_collapsed_exact": 0.3875
+    },
+    "non_eat_steps": {
+     "n": 2443,
+     "model_exact": 0.6603,
+     "model_exact_and_over_flag": 0.6598,
+     "copy14": 0.0065,
+     "copy4": 0.0074,
+     "model_type_collapsed_exact": 0.8428
+    }
+   },
+   "all": {
+    "all_steps": {
+     "n": 10374,
+     "model_exact": 0.8109,
+     "model_exact_and_over_flag": 0.8104,
+     "copy14": 0.0088,
+     "copy4": 0.0136,
+     "model_type_collapsed_exact": 0.8823
+    },
+    "eat_steps": {
+     "n": 839,
+     "model_exact": 0.5483,
+     "model_exact_and_over_flag": 0.5471,
+     "copy14": 0.0,
+     "copy4": 0.0,
+     "model_type_collapsed_exact": 0.6138
+    },
+    "non_eat_steps": {
+     "n": 9535,
+     "model_exact": 0.834,
+     "model_exact_and_over_flag": 0.8336,
+     "copy14": 0.0095,
+     "copy4": 0.0148,
+     "model_type_collapsed_exact": 0.9059
+    }
+   }
+  },
+  "per_cell_error": {
+   "empty": {
+    "cells": 1372399,
+    "pct_wrong_14class": 0.044,
+    "pct_wrong_type_only": 0.044,
+    "pct_wrong_14class_eat_steps": 0.096,
+    "pct_wrong_14class_non_eat_steps": 0.039
+   },
+   "food": {
+    "cells": 9535,
+    "pct_wrong_14class": 0.734,
+    "pct_wrong_type_only": 0.734,
+    "pct_wrong_14class_eat_steps": null,
+    "pct_wrong_14class_non_eat_steps": 0.734
+   },
+   "head": {
+    "cells": 10374,
+    "pct_wrong_14class": 1.966,
+    "pct_wrong_type_only": 1.88,
+    "pct_wrong_14class_eat_steps": 1.669,
+    "pct_wrong_14class_non_eat_steps": 1.993
+   },
+   "body": {
+    "cells": 93518,
+    "pct_wrong_14class": 1.148,
+    "pct_wrong_type_only": 0.091,
+    "pct_wrong_14class_eat_steps": 1.598,
+    "pct_wrong_14class_non_eat_steps": 1.1
+   },
+   "tail": {
+    "cells": 8030,
+    "pct_wrong_14class": 9.738,
+    "pct_wrong_type_only": 5.741,
+    "pct_wrong_14class_eat_steps": 35.757,
+    "pct_wrong_14class_non_eat_steps": 6.703
+   }
+  },
+  "game_over": {
+   "n_true": 141,
+   "predicted": 122,
+   "precision": 0.9672,
+   "recall": 0.8369
+  },
+  "ate_head": {
+   "accuracy": 0.998,
+   "n_eat": 839,
+   "precision": 0.9789,
+   "recall": 0.9964,
+   "accuracy_always_no": 0.9191
+  },
+  "food_spawn_on_empty_pct": 99.88,
+  "n_eat_steps": 839
+ },
+ "rollout_bfs": {
+  "kind": "bfs",
+  "n": 50,
+  "first_mismatch_median": 7.5,
+  "first_mismatch_p10": 2.0,
+  "first_type_mismatch_median": 7.5,
+  "first_type_mismatch_p10": 2.9000000000000004,
+  "no_mismatch_within_20": 10,
+  "matched_to_end": 0,
+  "first_invalid_median": 7.5,
+  "first_invalid_p10": 2.9000000000000004,
+  "no_invalid_within_20": 10,
+  "invalid_reasons": {
+   "wrong_length": 32,
+   "heads!=1": 8
+  },
+  "note": "21 = censored (no event in 20 steps)"
+ },
+ "rollout_random_safe": {
+  "kind": "random",
+  "n": 50,
+  "first_mismatch_median": 4.0,
+  "first_mismatch_p10": 1.0,
+  "first_type_mismatch_median": 5.0,
+  "first_type_mismatch_p10": 1.0,
+  "no_mismatch_within_20": 2,
+  "matched_to_end": 0,
+  "first_invalid_median": 5.0,
+  "first_invalid_p10": 1.0,
+  "no_invalid_within_20": 2,
+  "invalid_reasons": {
+   "wrong_length": 26,
+   "heads!=1": 22
+  },
+  "note": "21 = censored (no event in 20 steps)"
+ },
+ "implied_median_from_p": {
+  "p=overall_exact": {
+   "p": 0.8109,
+   "median_steps": 3.307
+  },
+  "p=non_eat_exact": {
+   "p": 0.834,
+   "median_steps": 3.819
+  },
+  "p=bucket_balanced_exact(rollout start mix)": {
+   "p": 0.7992250000000001,
+   "median_steps": 3.093
+  }
+ }
+}

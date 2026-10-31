@@ -1,0 +1,16 @@
+.venv/
+.cache/
+__pycache__/
+.pytest_cache/
+node_modules/
+data/
+checkpoints/
+runs/
+spikes/out/
+*.npy
+*.npz
+*.pt
+*.mov
+*.mp4
+drafts/
+.DS_Store

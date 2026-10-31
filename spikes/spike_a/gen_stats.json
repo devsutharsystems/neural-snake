@@ -1,0 +1,29 @@
+{
+ "random": {
+  "episodes": 298,
+  "median_len": 30.0,
+  "max_len": 217
+ },
+ "greedy": {
+  "episodes": 45,
+  "median_len": 213.0,
+  "max_len": 486
+ },
+ "bfs": {
+  "episodes": 29,
+  "median_len": 356.0,
+  "max_len": 500
+ },
+ "bfs_eps20": {
+  "episodes": 143,
+  "median_len": 61.0,
+  "max_len": 221
+ },
+ "greedy_eps30": {
+  "episodes": 184,
+  "median_len": 45.5,
+  "max_len": 175
+ },
+ "total_transitions": 50850,
+ "heldout_transitions": 9569
+}

@@ -1,0 +1,108 @@
+# Neural Snake — PLAN (Phase 0 closed; Day 2 checkpoint passed on validation; held-out not yet evaluated)
+
+**Status in one paragraph.** The model is `checkpoints/run2_best.pt` (git-ignored, 2.2 MB dir; step 26,089 of Run 2): R1v2 14-class input, dilated CNN with a learned ate head, food head on detached trunk features. On the 10,374 Spike A validation rows it gets 99.98% whole-board one-step exact match and, in 200-step rollouts against the engine (food synced), 99/100 BFS and 91/100 random-non-suicidal rollouts have no mismatch at all (spikes/spike_a/results_run2.json). Held-out seeds (seed % 5 == 0) have NOT been evaluated; section 12 says how that will be done, once.
+
+## 1. What / why / how / where / resources
+- **What**: Snake in the browser where no game rules run. A tiny model trained from scratch predicts every next state from the current state and the keypress.
+- **Why**: WorldTUI (simedw.com, 2026-10-21, self-reported ~360M params, 208 MB int4) shows a learned world model can run in a browser; this project asks how small the model can be for a game with exact rules, and honestly measures where it fails.
+- **How it works**: state (grid) + action → CNN → next grid (argmax per cell), food location (softmax over 144 cells, used only on eat steps), game-over logit. The browser loops the output back as the next input.
+- **How we build**: Python engine generates data → PyTorch trains → ONNX export → onnxruntime-web (WebGPU, WASM fallback) in a static page.
+- **Where**: train on this Mac (8 GB, MPS); serve as static GitHub Pages; no backend, no CDN.
+- **Resources**: Python 3.12 venv (3.15 has no onnxruntime wheel), torch 2.15.0, onnxruntime(-web) 1.31.1, ~45 MB vendored ORT files (`web/vendor/`).
+
+## 2. Decisions with evidence
+- **State representation: R1v2 chosen** (14-class one-hot: empty, food, head x4 dirs, body x4, tail x4; Markov, one frame). R2 (frame stack) has a measured 2.68-4.61% ambiguous transitions (information limit, spikes/spike_a/info_limit_val.json), so it cannot reach exact match even in principle; R1v2 has no such cap and wins at length 4+ (spikes/spike_a/results_v2.md: 16+ 25.1% vs 16.9% on the old loop). R2 is not trained again; its numbers stay as the ablation. All numbers on VALIDATION (seed %5==1, split_v2.json); held-out rows never loaded.
+- **Speed findings (Spike A debug 2)**: old loop measured 7,061 samples/s (batch 256, MPS) when re-timed (the earlier 300 s run logged ~3,200/s); the step is GPU-compute bound (forward 10 ms, backward 26 ms, optimizer 2.5 ms, data 1 ms), so on-device data/no-sync only gave ~0%. No MPS CPU-fallback warnings (dilated convs included). No-dilation variants (11x 3x3, or 5x 5x5) are slower (5.8-5.9k/s); CPU is 6-7x slower (~1.0k/s); batch 1024 gives only ~8% more. Best safe change is channels_last (9.7k/s); fp16 autocast + channels_last 11.3k/s (not used). The 5x goal was NOT met (best 3.0x vs the logged 3.2k, 1.4x vs the re-timed 7.1k). Width 16 reaches 14.3k/s but halves capacity. Files: spikes/spike_a/speed_v3.json, speed_v3_variants.json.
+- **Architecture (spikes/spike_a/v3.py, Net3)**: stem 3x3 + 7 residual dilated 3x3 convs (1,2,4,1,2,4,1; receptive field 33 covers 12x12), C=32, 78k params; two global mean+max pool broadcasts; an auxiliary **ate head**: global pool after conv 2 -> MLP -> "head ate food" logit, its sigmoid is broadcast as an extra channel into later layers (1x1 inject conv and the cls/food/over heads), trained with BCE. **The ate head is a learned part of the model inside the ONNX graph, not browser logic.** Training batches are 20% eat transitions + 20% game-over transitions + 60% natural (length-bucket weighted); evaluation is on the natural distribution, with a constant prior-shift logit applied to the over/ate outputs at eval time (baked into the graph).
+- **Debug 2 result (superseded by Run 2, see section 11; validation, 10 min, results_v3.json)**: one-step whole-board exact 81.1% (copy baseline 0.9%); eat steps 54.8%, non-eat 83.4%; 16+ bucket 62.8%. Overfit test (1,000 rows) passed: 99.7% at 60 s. 20-step rollouts still fail: first-mismatch median 7.5 (BFS) / 4.0 (random-safe), 0 matched to end. Median implied by per-step accuracy is 3.1-3.8 steps, so rollouts do better than the independent-error model predicts for BFS. Tail cell on eat steps is the worst class (35.8% wrong). Not yet at the >=20 target.
+- **Disclosure**: Phase 0 printed held-out numbers once, from throwaway models (results.json). The debug iteration used a validation split carved from train seeds (split_v2.json) and did not read held-out rows.
+- **Model candidates**: (A) small CNN, dilations 1,2,4,1,2,4,1 + global pooled feature; (B) small transformer over 144 cells. **Pick A, confirmed by Run 2** (16+ bucket 99.96%, spikes/spike_a/results_run2.json), so B is not needed. A converts to ONNX with plain conv ops (parity max abs diff 1.9e-6 measured on a random-weight net with ~157k params, `spikes/spike_b/export_results.json`; the trained net has 78,177 params, `spikes/spike_a/results_v3.json`; ONNX parity of the trained net is Day 3). Receptive field covers the grid by construction.
+- **Training hardware**: Mac MPS (measured steps/s in Spike A results). Colab not used so far. Free Colab GPU type and limits are not published (docs/facts.md row h). Run 2 trained 1,503.4 s on MPS at 7,335 samples/s (spikes/spike_a/results_run2.json).
+- **FINAL DECISIONS (Phase 0 close)**:
+  - **Encoding R1v2**: 14 classes (empty, food, head x4, body x4, tail x4), one frame, action as 5 constant planes (spikes/spike_a/common.py `grid14`, v3.py `build_x`).
+  - **Network** (spikes/spike_a/v3.py `Net3`, arch `dil`, C=32, 78,177 params per results_v3.json): stem + 7 residual dilated 3x3 convs (1,2,4,1,2,4,1), two global-pool broadcasts, fp32, MPS, channels_last. No BatchNorm or Dropout (grep of v3.py and run1.py; validation uses `net.eval()` at v3.py:181), so train and eval mode differ only by the prior-shift buffers.
+  - **Ate head**: learned, global pool after conv 2 -> MLP -> "head ate food" logit; its sigmoid is broadcast as an extra channel into later layers. It lives inside the ONNX graph; the browser contains no eat logic (v3.py lines 69-91, forward). Run 2 ate-head accuracy 100% on 10,374 validation rows, 839 eat steps (results_run2.json). The eval-time prior-shift correction is applied to the returned logits only, after the broadcast value is computed (v3.py:88-91), so train and eval feed the grid layers the same ate value.
+  - **Food head on detached trunk features** (`food_detach=True`, v3.py `Net3.forward`; test `tests/test_food_detach.py`, 2 passed). Reason: in Run 1 the food head memorized random spawn cells (train loss 2.85 vs the 4.87 uniform floor, validation loss 12.47) and its large gradient damaged the shared layers (spikes/spike_a/diag_run1.json).
+  - **Optimisation**: cosine LR to zero over the 30-minute maximum, AdamW weight decay 1e-4 (spikes/spike_a/run2.py:74), batches 20% eat + 20% game-over + 60% natural, best-checkpoint selection every 2.5 min on 5,000 fixed NEW-seed validation rows (data/run1, seed % 5 == 1), early stop after 10 min without improvement (fired at 1,503 s; best at 901.6 s, results_run2.json).
+  - **The model is `checkpoints/run2_best.pt`** (git-ignored; not committed). Data: 30,907 old + 400,644 new train rows (spikes/spike_a/gen_run1_stats.json).
+
+## 3. Evaluation plan (held-out by episode seed; never tuned on)
+- Baselines: copy previous frame; (optional) "move head one cell in current direction, no growth" as a second trivial rule.
+- One-step whole-board exact match by snake length (1-3, 4-7, 8-15, 16+), game-over precision/recall.
+- Rollout fidelity: 200 held-out rollouts (100 BFS-bot, 100 random-but-non-suicidal), food synced to the engine after each eat.
+- Invalid-state metric: >1 head, disconnected body, wrong length, food on snake. Food-spawn validity reported separately.
+- **Day 2 checkpoint metric**: median steps until first mismatch against the engine (food synced); rollouts that end in a game-over matching the engine are "matched to end", counted and reported separately and excluded from the median's mismatch count (treated as censored at their end step).
+- **Is median >= 20 reachable?** Episode length constrains this: real median episode lengths by policy are in `spikes/spike_a/gen_stats.json` (random 30, greedy 213, BFS 356, bfs_eps20 61, greedy_eps30 45.5). Random-safe rollouts that end in a crash before step 20 cannot exceed their end step, so for those the metric is bounded by episode length; report the median over rollouts that survive in the engine for >=20 steps, plus matched-to-end. Spike A did NOT reach it (median first mismatch 1-2 steps, spikes/spike_a/results.md). **Run 2 reaches it on validation (PASSED)**: 200-step cap, 100 BFS + 100 random-non-suicidal, first-mismatch median 201 = censored at the cap for both (BFS: 99/100 never mismatch, 38 reach an engine game-over with no mismatch; random-safe: 91/100 never mismatch, 47 matched to end; spikes/spike_a/results_run2.json). Median is censored: the true median is at least 200, not measured beyond it. The "no_mismatch_within_20" key in the JSON is a legacy name for "within the cap". Not yet evaluated on held-out seeds.
+
+## 4. One drift-mitigation iteration
+Pick **DAgger-style**: roll the model from valid start states, let the engine compute the true next state from the model's (possibly wrong but valid) state, add those pairs to training. Reason: the model sees its own error states with correct labels; scheduled sampling would train against the true next state of a different state, which is wrong labelling. Restriction: only add model-visited states that pass the validity checks (engine can't compute from invalid states).
+
+## 5. Main-page "no game code" design (web/index.html)
+JS does exactly: draw the grid; map key → action; NOOP tick timer (input plumbing, which some would call a game loop); argmax of the grid head; sample the food head; load the fixed start state from a data file generated by the engine; show game-over from the model's output; restart (reload start state). It never rejects or resamples the model's food spawn.
+**Borderline, flagged**: (1) the tick timer; (2) the fixed start state is engine-generated; (3) feeding model output back as input is state plumbing; (4) in R1, the body-order plane and direction are model outputs fed back — fine if they are outputs, a rule if JS computes them; (5) sampling temperature for food.
+
+## 6. compare.html
+Separate page, labelled "runs a real engine for comparison only". JS port of the engine; proven identical to Python by replaying Python golden traces and requiring byte-identical states (test in CI).
+
+## 7. Requirements traceability
+| Req | Requirement | Verification | Evidence file | Status |
+|---|---|---|---|---|
+| 1 | Playable, model-produced frames | manual play in a browser + grep of index.html JS for game rules (none allowed) | web/index.html (does not exist yet) | **Day 3** |
+| 2 | Tiny, from scratch, params reported | param count printed at train; ONNX file size at export | spikes/spike_a/results_v3.json (78,177 params, `Net3` dil C=32); trained from random init in v3.py/run2.py | **Done** (ONNX size reported Day 3) |
+| 3 | PyTorch training | train scripts + logs | spikes/spike_a/v3.py, run1.py, run2.py; run2.log; results_run2.json | **Done** |
+| 4 | Free hardware, real time stated | train log with device and wall time | spikes/spike_a/results_run2.json (device MPS, 1,503.4 s, 7,335 samples/s); Colab not used | **Done** |
+| 5 | WebGPU + WASM fallback, page shows actual backend | ONNX parity + headed-Chrome bench; page label | spikes/spike_b/bench.html, export_results.json (random-weight net only) | **Day 3** (needs Dev's browser numbers) |
+| 6 | Free, static, no CDN | file audit of web/ (no external URLs); license file for vendored ORT | web/vendor/ (43.8 MB, no LICENSE file yet) | **Day 3** |
+| 7 | Verified WorldTUI sentence | docs/facts.md rows a-e | docs/facts.md | **Done** (verified via fetch summary) |
+| 8 | Honest failure evaluation | validation failure analysis now; held-out evaluation once | validation: spikes/spike_a/results_run2.json/.md (failure grids), diag_run1.json (Run 1 failure), diag_run2.json; held-out: none yet | validation **Done**; held-out **Day 4** |
+
+## 8. Risks and cut order
+Cut order: ablation → compare.html polish → mobile polish. Never cut a requirement or the held-out evaluation. Risks: long-snake accuracy; WebGPU op support in ORT-web ("experimental" per installed README); 45 MB of vendored wasm (30 MB jsep + 15 MB) is heavy for Pages; ORT falls back from webgpu to wasm with only a console warning, so the page must report the backend itself.
+
+## 9. Spike results
+See spikes/spike_a/results_run2.md (current), results_run1.md, results_v2.md, results.md, and spikes/spike_b/export_results.json. Section 11 tells the story in order.
+
+## 10. File tree
+- `.gitignore`, `package.json` — ignores; npm pin of onnxruntime-web 1.31.1
+- `scripts/env.sh` — keeps pip/npm/tmp caches inside the project
+- `engine/snake.py` — reference engine; `tests/test_engine.py` — 11 tests
+- `docs/facts.md` — verified-facts table
+- `spikes/spike_a/{gen.py,train_eval.py,split.json,gen_stats.json,results.*,failures.md,run.log}` — Phase 0 data, training, eval
+- `spikes/spike_a/{common.py,v2.py,v3.py,gen_run1.py,run1.py,run2.py,diag_run1.py,diag_run2.py,bench_variants.py}` + `split_v2.json`, `results_{v2,v3,run1,run2}.{json,md}`, `diag_run{1,2}.json`, `speed_v3*.json`, `overfit_*.json`, `run*.log`, `failures_v*.md` — debug iterations, Run 1, Run 2
+- `data/spike_a/`, `data/run1/` (git-ignored, 504 MB total), `checkpoints/` (git-ignored; run2_best.pt is the model)
+- `spikes/spike_b/{export.py,random_net.onnx,export_results.json,bench.html,bench.js}` — ONNX parity and browser bench
+- `web/vendor/` — vendored ORT-web 1.31.1 files
+
+## 11. The story (one-step whole-board exact match on VALIDATION, seed % 5 == 1, unless noted)
+| Stage | Result | What happened | Source |
+|---|---|---|---|
+| Phase 0 | 44% (figure from the Phase 0 close-out; not re-read in this edit) | First R1/R2 spike. Phase 0 printed held-out numbers once from throwaway models (disclosure in section 2) | spikes/spike_a/results.json, results.md |
+| Debug 1 | 50.5% (R1v2); 48.3% (R2) | Root cause of R1's failure: body order encoded as one scalar plane (order/144); it reached only 43% grid / 4.6% full-state in the 1,000-row overfit test. Replaced by the 14-class one-hot R1v2; R2 measured 2.68-4.61% ambiguous transitions | spikes/spike_a/results_v2.json, overfit_R1old.json, info_limit_val.json |
+| Debug 2 | 81.1% | Ate head, 20% eat / 20% game-over oversampling, on-device data. Overfit test passed (99.7% at 60 s). Rollout first-mismatch medians 7.5 (BFS) / 4.0 (random-safe) at a 20-step horizon | spikes/spike_a/results_v3.json, overfit_v3_dil_mps.json |
+| Run 1 | peak 97.25% at 5 min (2,000-row subset), final 75.8% (10,374 rows, 60 min); rollout medians 4.0 / 3.0 | Accuracy fell for the rest of the hour. The food head memorized random spawn cells: its train loss fell 4.51 -> 2.85, below the 4.877 uniform floor, while validation loss rose 5.33 -> 12.47; train-sample whole-board accuracy also fell 89.1% -> 78.0% because the food gradient (loss ~3-5 vs grid ~0.01) dominated the shared layers. 15.5% of train rows are duplicate (state, action) pairs and 8,868 of 34,490 eat rows share a (state, action) with a different spawn cell | spikes/spike_a/run1.log, results_run1.json, diag_run1.json |
+| Run 2 | **99.98%** (eat steps 99.88%, non-eat 99.99%; 16+ bucket 99.96%) | Food head on detached trunk features, cosine LR, best-checkpoint selection on new-seed validation. Food validation loss 4.879 vs floor 4.872. 200-step rollouts: BFS 99/100 and random-safe 91/100 never mismatch; 38 and 47 reach an engine game-over with no mismatch | spikes/spike_a/results_run2.json, diag_run2.json, run2.log |
+
+**Day 2 checkpoint (median first mismatch >= 20 steps, validation): PASSED** (median 201 = censored at the 200-step cap for both policies). **Held-out: not yet evaluated.**
+
+## 12. Honest limits so far
+- **No snakes of length 64+ in training**: the 64-999 length bucket has 0 of 400,644 new train rows, and 32-63 has 20,024 (spikes/spike_a/gen_run1_stats.json); episodes are capped at 500 steps (gen.py `CAP`). Behaviour above length 63 is unknown, and a 1,000-step rollout could reach it.
+- **Food spawn lands on the snake 0.48% of the time**: 99.52% valid over 839 eat steps; 15/100 BFS rollouts contain a `food_on_snake` state (spikes/spike_a/results_run2.json). The page will show these, not hide them or resample; JS never rejects the model's food.
+- **Train/validation overlap**: 22.3% (2,311 of 10,374) of validation (state, action) pairs also occur in train, almost all short snakes (48.3% at length 1-3, 0% at 16+). Accuracy on the 8,063 unseen pairs is 99.975%, and 99.963% on unseen 16+ (spikes/spike_a/diag_run2.json).
+- **Repeated looks at the same validation rows**: the 10,374 Spike A validation rows were used to compare designs in Debug 1, Debug 2 and Run 1 and to diagnose Run 1 (the food-head fix was chosen from that diagnosis). Run 2 used separate new-seed rows for checkpoint selection, but the headline number is still a validation number with some design-choice optimism. Held-out is the unbiased test.
+- **Rollout median is censored** at the 200-step cap: it shows "at least 200", not the true median. 61 BFS and 44 random-safe rollouts were still alive and matching at the cap.
+- **Remaining one-step errors** are tail cells on eat steps (0.119% wrong) and the food spawn; both failure grids in results_run2.md are tail-on-eat errors.
+- **Not yet verified**: ONNX parity and speed of the trained net (only a random-weight net was exported, spikes/spike_b/export_results.json); browser numbers on WebGPU/WASM.
+
+## 13. Final held-out evaluation plan (held-out evaluated EXACTLY ONCE)
+- Frozen first: `checkpoints/run2_best.pt` and the evaluation script, recorded (file hash) in the output; no tuning, retraining or re-selection after the run. The script is dry-run end to end on VALIDATION rows with the same code path, then run on held-out (seed % 5 == 0) once; it writes a lock file and refuses a second run. **The headline held-out number comes from `data/run1`'s held-out rows (seed % 5 == 0, never seen by any model or script).** `data/spike_a`'s held-out rows are reported separately and labelled "seen once in Phase 0 by throwaway models" (disclosure in section 2).
+- **Rollouts**: cap 1000 steps, 100 BFS + 100 random-non-suicidal, food synced to the engine after each eat. Also report the snake length reached, since training has no snakes of length 64+.
+- **Reported separately**: (1) dynamics-invalid states (heads != 1, wrong length, disconnected) with first-invalid median, and (2) `food_on_snake` / food-spawn validity. Mismatch against the engine is a third, separate number.
+- **Food head**: validation-style cross-entropy on held-out eat rows vs the uniform-over-empty-cells floor (4.87 on validation; recompute the floor on the held-out rows).
+- Same one-step tables as results_run2.json (length buckets vs copy baseline, eat vs non-eat, per-class error, game-over precision/recall, ate-head accuracy) and 2 failure grids. Implied median ln(0.5)/ln(p) next to the measured one.
+
+## 14. Day 3 plan
+1. **ONNX export of `run2_best.pt`** (prior-shift buffers and the ate broadcast inside the graph). Parity test PyTorch vs ONNX Runtime on 1,000 validation rows: argmax grid identical on all 1,000, plus identical game-over and ate decisions; report max abs logit difference and the file size (new test).
+2. **`web/index.html`**: canvas, arrow keys, NOOP timer, model output only (section 5), visible backend label; WebGPU first, the WASM bundle is loaded only if WebGPU fails; a `?backend=wasm` link forces WASM. The page reports the backend it actually got.
+3. **`web/compare.html`**: JS engine port proven identical to the Python engine by golden traces (byte-identical states).
+4. **MIT LICENSE file for the vendored onnxruntime-web** plus an audit that nothing in `web/` loads an external URL (Req 6).
+5. Day 4 (after Day 3): held-out evaluation per section 13, and the written failure analysis.

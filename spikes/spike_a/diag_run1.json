@@ -1,0 +1,135 @@
+{
+ "command": "diag_run1.py",
+ "train_sample_rows": 5000,
+ "val_rows": 10374,
+ "food_uniform_floor": {
+  "train_sample": {
+   "mean_ln_empty": 4.8774,
+   "eat_rows": 399
+  },
+  "validation": {
+   "mean_ln_empty": 4.8722,
+   "eat_rows": 839
+  }
+ },
+ "duplicates": {
+  "train_rows": 431551,
+  "unique_state_action": 364679,
+  "duplicate_rows_(rows_beyond_first)": 66872,
+  "pct_duplicate": 15.5,
+  "rows_in_a_group_of_size>1": 97654,
+  "eat_rows_with_same_state_action_but_different_spawn_cell": 8868,
+  "eat_rows": 34490,
+  "non_eat_rows_(first 200k)_with_same_state_action_but_different_target_grid": 0
+ },
+ "checkpoints": {
+  "10min": {
+   "train_losses": {
+    "grid": 0.006,
+    "game_over": 0.0005,
+    "ate": 0.0006,
+    "food": 4.5092,
+    "n_food_rows": 399
+   },
+   "val_losses": {
+    "grid": 0.0066,
+    "game_over": 0.0014,
+    "ate": 0.0009,
+    "food": 5.331,
+    "n_food_rows": 839
+   },
+   "val_whole_board_acc": 0.8825,
+   "train_sample_whole_board_acc": 0.891
+  },
+  "20min": {
+   "train_losses": {
+    "grid": 0.012,
+    "game_over": 0.0,
+    "ate": 0.0027,
+    "food": 4.0026,
+    "n_food_rows": 399
+   },
+   "val_losses": {
+    "grid": 0.0134,
+    "game_over": 0.0013,
+    "ate": 0.0059,
+    "food": 6.4917,
+    "n_food_rows": 839
+   },
+   "val_whole_board_acc": 0.8043,
+   "train_sample_whole_board_acc": 0.8292
+  },
+  "30min": {
+   "train_losses": {
+    "grid": 0.0141,
+    "game_over": 0.0017,
+    "ate": 0.0052,
+    "food": 3.6192,
+    "n_food_rows": 399
+   },
+   "val_losses": {
+    "grid": 0.0153,
+    "game_over": 0.0012,
+    "ate": 0.0032,
+    "food": 7.7984,
+    "n_food_rows": 839
+   },
+   "val_whole_board_acc": 0.7806,
+   "train_sample_whole_board_acc": 0.8062
+  },
+  "40min": {
+   "train_losses": {
+    "grid": 0.0162,
+    "game_over": 0.0,
+    "ate": 0.0031,
+    "food": 3.2465,
+    "n_food_rows": 399
+   },
+   "val_losses": {
+    "grid": 0.0177,
+    "game_over": 0.0036,
+    "ate": 0.002,
+    "food": 9.4548,
+    "n_food_rows": 839
+   },
+   "val_whole_board_acc": 0.7635,
+   "train_sample_whole_board_acc": 0.7852
+  },
+  "50min": {
+   "train_losses": {
+    "grid": 0.0167,
+    "game_over": 0.0,
+    "ate": 0.0021,
+    "food": 3.0287,
+    "n_food_rows": 399
+   },
+   "val_losses": {
+    "grid": 0.0181,
+    "game_over": 0.0032,
+    "ate": 0.0018,
+    "food": 11.1885,
+    "n_food_rows": 839
+   },
+   "val_whole_board_acc": 0.7588,
+   "train_sample_whole_board_acc": 0.7766
+  },
+  "final": {
+   "train_losses": {
+    "grid": 0.0168,
+    "game_over": 0.0,
+    "ate": 0.0012,
+    "food": 2.8523,
+    "n_food_rows": 399
+   },
+   "val_losses": {
+    "grid": 0.0182,
+    "game_over": 0.0033,
+    "ate": 0.0017,
+    "food": 12.4672,
+    "n_food_rows": 839
+   },
+   "val_whole_board_acc": 0.758,
+   "train_sample_whole_board_acc": 0.7802
+  }
+ }
+}

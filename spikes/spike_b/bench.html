@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spike B bench</title>
+<style>body{font:14px system-ui;margin:16px;max-width:760px}button{font:inherit;padding:6px 12px}
+textarea{width:100%;height:340px;font:12px ui-monospace,monospace}</style></head>
+<body>
+<h1>Spike B: ORT-web bench (random weights)</h1>
+<p>Local files only, no CDN. Two separate sessions: <code>['webgpu']</code> only and <code>['wasm']</code> only.</p>
+<button id="run">Run benchmark</button> <span id="status"></span>
+<p>Copyable result:</p>
+<textarea id="out" readonly></textarea>
+<script type="module" src="./bench.js"></script>
+</body></html>

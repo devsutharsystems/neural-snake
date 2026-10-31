@@ -1,0 +1,185 @@
+{
+ "command": "v3.py bench",
+ "rows": [
+  {
+   "name": "OLD v2 loop (dil, no ate, CPU sampling, host sync in loss)",
+   "device": "mps",
+   "batch": 256,
+   "ms": {
+    "data": 0.94,
+    "forward": 10.21,
+    "backward": 25.82,
+    "optimizer": 2.49
+   },
+   "samples_per_s_e2e": 7061
+  },
+  {
+   "name": "NEW dil",
+   "device": "mps",
+   "batch": 256,
+   "params": 78177,
+   "ms": {
+    "data": 1.12,
+    "forward": 10.31,
+    "backward": 26.84,
+    "optimizer": 1.18
+   },
+   "samples_per_s_e2e": 7090,
+   "warnings": []
+  },
+  {
+   "name": "NEW dil",
+   "device": "mps",
+   "batch": 1024,
+   "params": 78177,
+   "ms": {
+    "data": 2.3,
+    "forward": 33.57,
+    "backward": 98.89,
+    "optimizer": 1.22
+   },
+   "samples_per_s_e2e": 7666,
+   "warnings": []
+  },
+  {
+   "name": "NEW plain11",
+   "device": "mps",
+   "batch": 256,
+   "params": 115169,
+   "ms": {
+    "data": 1.15,
+    "forward": 11.4,
+    "backward": 35.19,
+    "optimizer": 1.37
+   },
+   "samples_per_s_e2e": 5798,
+   "warnings": []
+  },
+  {
+   "name": "NEW plain11",
+   "device": "mps",
+   "batch": 1024,
+   "params": 115169,
+   "ms": {
+    "data": 2.22,
+    "forward": 39.59,
+    "backward": 127.81,
+    "optimizer": 1.28
+   },
+   "samples_per_s_e2e": 6111,
+   "warnings": []
+  },
+  {
+   "name": "NEW k5",
+   "device": "mps",
+   "batch": 256,
+   "params": 141601,
+   "ms": {
+    "data": 1.11,
+    "forward": 12.45,
+    "backward": 32.62,
+    "optimizer": 1.18
+   },
+   "samples_per_s_e2e": 5926,
+   "warnings": []
+  },
+  {
+   "name": "NEW k5",
+   "device": "mps",
+   "batch": 1024,
+   "params": 141601,
+   "ms": {
+    "data": 2.33,
+    "forward": 44.34,
+    "backward": 122.1,
+    "optimizer": 1.32
+   },
+   "samples_per_s_e2e": 6143,
+   "warnings": []
+  },
+  {
+   "name": "NEW dil",
+   "device": "cpu",
+   "batch": 256,
+   "params": 78177,
+   "ms": {
+    "data": 0.71,
+    "forward": 79.51,
+    "backward": 157.04,
+    "optimizer": 0.53
+   },
+   "samples_per_s_e2e": 1045,
+   "warnings": []
+  },
+  {
+   "name": "NEW dil",
+   "device": "cpu",
+   "batch": 1024,
+   "params": 78177,
+   "ms": {
+    "data": 2.17,
+    "forward": 330.44,
+    "backward": 637.57,
+    "optimizer": 0.57
+   },
+   "samples_per_s_e2e": 1009,
+   "warnings": []
+  },
+  {
+   "name": "NEW plain11",
+   "device": "cpu",
+   "batch": 256,
+   "params": 115169,
+   "ms": {
+    "data": 0.73,
+    "forward": 41.36,
+    "backward": 248.1,
+    "optimizer": 0.68
+   },
+   "samples_per_s_e2e": 860,
+   "warnings": []
+  },
+  {
+   "name": "NEW plain11",
+   "device": "cpu",
+   "batch": 1024,
+   "params": 115169,
+   "ms": {
+    "data": 2.04,
+    "forward": 210.68,
+    "backward": 970.23,
+    "optimizer": 0.68
+   },
+   "samples_per_s_e2e": 844,
+   "warnings": []
+  },
+  {
+   "name": "NEW k5",
+   "device": "cpu",
+   "batch": 256,
+   "params": 141601,
+   "ms": {
+    "data": 0.68,
+    "forward": 27.29,
+    "backward": 226.29,
+    "optimizer": 0.51
+   },
+   "samples_per_s_e2e": 966,
+   "warnings": []
+  },
+  {
+   "name": "NEW k5",
+   "device": "cpu",
+   "batch": 1024,
+   "params": 141601,
+   "ms": {
+    "data": 2.2,
+    "forward": 122.77,
+    "backward": 914.0,
+    "optimizer": 0.54
+   },
+   "samples_per_s_e2e": 961,
+   "warnings": []
+  }
+ ]
+}

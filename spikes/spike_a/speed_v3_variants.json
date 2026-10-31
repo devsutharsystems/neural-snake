@@ -1,0 +1,95 @@
+{
+ "command": "v3 bench_variants.py",
+ "rows": [
+  {
+   "name": "base dil C32",
+   "arch": "dil",
+   "C": 32,
+   "channels_last": false,
+   "amp": "None",
+   "batch": 256,
+   "samples_per_s": 7453,
+   "finite_loss": true
+  },
+  {
+   "name": "dil C32 channels_last",
+   "arch": "dil",
+   "C": 32,
+   "channels_last": true,
+   "amp": "None",
+   "batch": 256,
+   "samples_per_s": 9665,
+   "finite_loss": true
+  },
+  {
+   "name": "dil C32 fp16",
+   "arch": "dil",
+   "C": 32,
+   "channels_last": false,
+   "amp": "torch.float16",
+   "batch": 256,
+   "samples_per_s": 8548,
+   "finite_loss": true
+  },
+  {
+   "name": "dil C32 bf16",
+   "arch": "dil",
+   "C": 32,
+   "channels_last": false,
+   "amp": "torch.bfloat16",
+   "batch": 256,
+   "samples_per_s": 7325,
+   "finite_loss": true
+  },
+  {
+   "name": "dil C32 cl+fp16",
+   "arch": "dil",
+   "C": 32,
+   "channels_last": true,
+   "amp": "torch.float16",
+   "batch": 256,
+   "samples_per_s": 11306,
+   "finite_loss": true
+  },
+  {
+   "name": "dil C16",
+   "arch": "dil",
+   "C": 16,
+   "channels_last": false,
+   "amp": "None",
+   "batch": 256,
+   "samples_per_s": 14302,
+   "finite_loss": true
+  },
+  {
+   "name": "dil C64",
+   "arch": "dil",
+   "C": 64,
+   "channels_last": false,
+   "amp": "None",
+   "batch": 256,
+   "samples_per_s": 3508,
+   "finite_loss": true
+  },
+  {
+   "name": "plain11 C32 fp16",
+   "arch": "plain11",
+   "C": 32,
+   "channels_last": false,
+   "amp": "torch.float16",
+   "batch": 256,
+   "samples_per_s": 6691,
+   "finite_loss": true
+  },
+  {
+   "name": "k5 C32 fp16",
+   "arch": "k5",
+   "C": 32,
+   "channels_last": false,
+   "amp": "torch.float16",
+   "batch": 256,
+   "samples_per_s": 5987,
+   "finite_loss": true
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+export PIP_CACHE_DIR="$PWD/.cache/pip"
+export npm_config_cache="$PWD/.cache/npm"
+export TMPDIR="$PWD/.cache/tmp"
+export XDG_CACHE_HOME="$PWD/.cache/xdg"
+export MPLCONFIGDIR="$PWD/.cache/mpl"
+mkdir -p "$TMPDIR" "$PIP_CACHE_DIR" "$npm_config_cache" "$XDG_CACHE_HOME" "$MPLCONFIGDIR"

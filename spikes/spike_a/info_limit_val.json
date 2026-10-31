@@ -1,0 +1,8 @@
+{
+ "transitions": 10374,
+ "ambiguous_tail": 278,
+ "search_capped_undetermined": 200,
+ "pct_ambiguous": 2.68,
+ "pct_ambiguous_or_capped_upper_bound": 4.608,
+ "seconds": 13.0
+}

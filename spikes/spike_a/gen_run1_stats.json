@@ -1,0 +1,25 @@
+{
+ "command": "gen_run1.py",
+ "seconds": 8.9,
+ "total_transitions": 669784,
+ "train": 400644,
+ "validation": 135292,
+ "train_by_policy": {
+  "random": 80035,
+  "greedy": 80134,
+  "bfs": 80464,
+  "bfs_eps20": 80000,
+  "greedy_eps30": 80011
+ },
+ "train_length_hist(length before the step)": {
+  "1-1": 101896,
+  "2-3": 59349,
+  "4-7": 74706,
+  "8-15": 74559,
+  "16-31": 70110,
+  "32-63": 20024,
+  "64-999": 0
+ },
+ "episode_seed_overlap_with_spike_a": 0,
+ "disk_MB": 491.0
+}

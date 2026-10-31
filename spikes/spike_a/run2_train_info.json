@@ -1,0 +1,199 @@
+{
+ "command": "run2.py train 1800.0",
+ "n_train": 431551,
+ "n_val": 10374,
+ "steps": 43074,
+ "seconds": 1503.4,
+ "samples_per_s": 7335,
+ "final_loss": 4.9022,
+ "prior_shifts": {
+  "over_shift": 2.903445437722491,
+  "over_shift_info": {
+   "batch_rate": 0.2073,
+   "natural_train_rate": 0.0141
+  },
+  "ate_shift": 1.330590941175432,
+  "ate_shift_info": {
+   "batch_rate": 0.2473,
+   "natural_train_rate": 0.0799
+  }
+ },
+ "selection": {
+  "rows": 5000,
+  "source": "new-seed validation (data/run1, seed % 5 == 1)",
+  "best_sel_acc": 1.0,
+  "best_at_s": 901.6,
+  "curve": [
+   {
+    "t_s": 150,
+    "step": 4873,
+    "train_loss": 4.9525,
+    "sel5000": {
+     "overall": 0.9976,
+     "eat": 0.9952,
+     "non_eat": 0.9978
+    },
+    "sel_head_losses": {
+     "grid": 0.0001,
+     "game_over": 0.0,
+     "ate": 0.0,
+     "food": 4.893,
+     "n_food_rows": 413
+    }
+   },
+   {
+    "t_s": 301,
+    "step": 8650,
+    "train_loss": 4.8873,
+    "sel5000": {
+     "overall": 0.995,
+     "eat": 0.9927,
+     "non_eat": 0.9952
+    },
+    "sel_head_losses": {
+     "grid": 0.0004,
+     "game_over": 0.0001,
+     "ate": 0.0009,
+     "food": 4.9013,
+     "n_food_rows": 413
+    }
+   },
+   {
+    "t_s": 451,
+    "step": 12771,
+    "train_loss": 4.8959,
+    "sel5000": {
+     "overall": 0.996,
+     "eat": 0.9903,
+     "non_eat": 0.9965
+    },
+    "sel_head_losses": {
+     "grid": 0.0001,
+     "game_over": 0.0,
+     "ate": 0.001,
+     "food": 4.8976,
+     "n_food_rows": 413
+    }
+   },
+   {
+    "t_s": 601,
+    "step": 17261,
+    "train_loss": 4.8867,
+    "sel5000": {
+     "overall": 0.9988,
+     "eat": 1.0,
+     "non_eat": 0.9987
+    },
+    "sel_head_losses": {
+     "grid": 0.0001,
+     "game_over": 0.0,
+     "ate": 0.0,
+     "food": 4.8901,
+     "n_food_rows": 413
+    }
+   },
+   {
+    "t_s": 751,
+    "step": 21747,
+    "train_loss": 4.8798,
+    "sel5000": {
+     "overall": 0.9998,
+     "eat": 1.0,
+     "non_eat": 0.9998
+    },
+    "sel_head_losses": {
+     "grid": 0.0,
+     "game_over": 0.0,
+     "ate": 0.0,
+     "food": 4.8875,
+     "n_food_rows": 413
+    }
+   },
+   {
+    "t_s": 902,
+    "step": 26089,
+    "train_loss": 4.9284,
+    "sel5000": {
+     "overall": 1.0,
+     "eat": 1.0,
+     "non_eat": 1.0
+    },
+    "sel_head_losses": {
+     "grid": 0.0,
+     "game_over": 0.0,
+     "ate": 0.0,
+     "food": 4.8878,
+     "n_food_rows": 413
+    }
+   },
+   {
+    "t_s": 1052,
+    "step": 30352,
+    "train_loss": 4.901,
+    "sel5000": {
+     "overall": 1.0,
+     "eat": 1.0,
+     "non_eat": 1.0
+    },
+    "sel_head_losses": {
+     "grid": 0.0,
+     "game_over": 0.0,
+     "ate": 0.0,
+     "food": 4.8832,
+     "n_food_rows": 413
+    }
+   },
+   {
+    "t_s": 1202,
+    "step": 34787,
+    "train_loss": 4.8774,
+    "sel5000": {
+     "overall": 1.0,
+     "eat": 1.0,
+     "non_eat": 1.0
+    },
+    "sel_head_losses": {
+     "grid": 0.0,
+     "game_over": 0.0,
+     "ate": 0.0,
+     "food": 4.8882,
+     "n_food_rows": 413
+    }
+   },
+   {
+    "t_s": 1352,
+    "step": 39043,
+    "train_loss": 4.8552,
+    "sel5000": {
+     "overall": 1.0,
+     "eat": 1.0,
+     "non_eat": 1.0
+    },
+    "sel_head_losses": {
+     "grid": 0.0,
+     "game_over": 0.0,
+     "ate": 0.0,
+     "food": 4.8793,
+     "n_food_rows": 413
+    }
+   },
+   {
+    "t_s": 1503,
+    "step": 43074,
+    "train_loss": 4.9022,
+    "sel5000": {
+     "overall": 1.0,
+     "eat": 1.0,
+     "non_eat": 1.0
+    },
+    "sel_head_losses": {
+     "grid": 0.0,
+     "game_over": 0.0,
+     "ate": 0.0,
+     "food": 4.881,
+     "n_food_rows": 413
+    }
+   }
+  ]
+ }
+}

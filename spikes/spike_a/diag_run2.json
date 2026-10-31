@@ -1,0 +1,29 @@
+{
+ "command": "diag_run2.py",
+ "checkpoint": "checkpoints/run2_best.pt",
+ "val_rows": 10374,
+ "val_head_losses_(train-mode raw logits)": {
+  "grid": 0.0,
+  "game_over": 0.0,
+  "ate": 0.0,
+  "food": 4.8794,
+  "n_food_rows": 839
+ },
+ "food_uniform_floor_mean_ln_empty": 4.8722,
+ "eat_rows": 839,
+ "val_pairs_also_in_train": {
+  "count": 2311,
+  "pct": 22.28,
+  "accuracy_on_seen": 1.0,
+  "accuracy_on_unseen": 0.99975,
+  "n_unseen": 8063,
+  "pct_seen_by_length_bucket": {
+   "1-3": 48.3,
+   "4-7": 18.3,
+   "8-15": 2.6,
+   "16+": 0.0
+  },
+  "accuracy_on_unseen_16plus": 0.99963,
+  "n_unseen_16plus": 2683
+ }
+}
