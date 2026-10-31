@@ -173,10 +173,11 @@ def check(readme, src=None):
             problems.append(f"docs/browser_checks.md lacks '{s}'")
         if s not in readme:
             problems.append(f"browser fact: README lacks '{s}'")
-    funcs, _ = audit_web.inventory(os.path.join(ROOT, "web", "main.js"))
-    for name, _ in funcs:
-        if f"{name}()" not in readme:
-            problems.append(f"function inventory: README lacks {name}()")
+    for js in ("main.js", "controls.js"):  # every function of the game page's JS, including the touch / swipe input module, must be listed
+        funcs, _ = audit_web.inventory(os.path.join(ROOT, "web", js))
+        for name, _ in funcs:
+            if f"{name}()" not in readme:
+                problems.append(f"function inventory ({js}): README lacks {name}()")
     return problems
 
 

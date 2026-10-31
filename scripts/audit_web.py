@@ -1,6 +1,7 @@
 """Audit web/: (1) fail on any external URL in any file, (2) print an inventory of every function in web/main.js with its one-line purpose
 (the comment `// purpose: ...` directly above it); a function without a purpose line is a failure.
-(3) fail if index.html or main.js reference engine.js (only compare.html / compare.js may use the hand-written engine).
+(3) fail if index.html, main.js or controls.js reference engine.js (only compare.html / compare.js may use the hand-written engine);
+    web/controls.js (touch / swipe / button input) is inventoried too and each of its functions needs a purpose line.
 Run: .venv/bin/python scripts/audit_web.py [web_dir]   (exit code 1 on any violation)
 
 Allowed URLs (documented, never fetched by the page):
@@ -21,7 +22,8 @@ WASM_STRINGS = {b"https://arxiv.org/abs/1502.03167.", b"https://docs.nvidia.com/
 ALLOWED = {"vendor/ort.wasm.min.mjs": {b"https://web.dev/cross-origin-isolation-guide/"},
            "vendor/ort.webgpu.min.mjs": {b"https://web.dev/cross-origin-isolation-guide/"},
            "vendor/ort-wasm-simd-threaded.wasm": WASM_STRINGS, "vendor/ort-wasm-simd-threaded.asyncify.wasm": WASM_STRINGS}
-NO_ENGINE_FILES = ("index.html", "main.js")  # the main game page must contain no game rules, so it may not touch web/engine.js
+# the main game page must contain no game rules, so it (and the input module it shares with compare.html) may not touch web/engine.js
+NO_ENGINE_FILES = ("index.html", "main.js", "controls.js")
 ENGINE_RE = re.compile(r"engine\.js|(?:from|import\s*\()\s*['\"][^'\"]*engine")
 FUNC_RE = re.compile(r"^\s*(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(|^\s*(?:export\s+)?const\s+(\w+)\s*=\s*(?:async\s*)?(?:\([^)]*\)|\w+)\s*=>")
 
@@ -75,10 +77,13 @@ def audit(web_dir):
     funcs, missing = inventory(js) if os.path.exists(js) else ([], [])
     cmp_js = os.path.join(web_dir, "compare.js")
     cmp_missing = inventory(cmp_js)[1] if os.path.exists(cmp_js) else []
+    ctl_js = os.path.join(web_dir, "controls.js")
+    ctl_funcs, ctl_missing = inventory(ctl_js) if os.path.exists(ctl_js) else ([], [])
     engine_refs = engine_references(web_dir)
     return {"external_urls": bad, "allowed_url_hits": allowed_hits, "functions": funcs, "functions_missing_purpose": missing,
+            "controls_functions": ctl_funcs, "controls_functions_missing_purpose": ctl_missing,
             "compare_functions_missing_purpose": cmp_missing, "engine_references_in_main_page": engine_refs,
-            "ok": not bad and not missing and not cmp_missing and not engine_refs}
+            "ok": not bad and not missing and not cmp_missing and not ctl_missing and not engine_refs}
 
 
 def main():
@@ -96,9 +101,14 @@ def main():
         print(f"  {name}() - {purpose}")
     for name in r["functions_missing_purpose"]:
         print(f"  MISSING PURPOSE LINE: {name}()")
+    print("\nTouch / swipe / button input (web/controls.js, shared with compare.html; it only reports an action index):")
+    for name, purpose in r["controls_functions"]:
+        print(f"  {name}() - {purpose}")
+    for name in r["controls_functions_missing_purpose"]:
+        print(f"  MISSING PURPOSE LINE in controls.js: {name}()")
     for name in r["compare_functions_missing_purpose"]:
         print(f"  MISSING PURPOSE LINE in compare.js: {name}()")
-    print("\nengine.js references in index.html / main.js: " + (", ".join(r["engine_references_in_main_page"]) + "  <- FORBIDDEN" if r["engine_references_in_main_page"] else "none (compare.html / compare.js may use it)"))
+    print("\nengine.js references in index.html / main.js / controls.js: " + (", ".join(r["engine_references_in_main_page"]) + "  <- FORBIDDEN" if r["engine_references_in_main_page"] else "none (compare.html / compare.js may use it)"))
     print("\nAUDIT " + ("PASSED" if r["ok"] else "FAILED"))
     return 0 if r["ok"] else 1
 

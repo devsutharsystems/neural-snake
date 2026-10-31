@@ -53,3 +53,16 @@ def test_compare_page_may_use_engine(tmp_path):
 def test_compare_functions_need_purpose_lines(tmp_path):
     (tmp_path / "compare.js").write_text("function nope() {}\n")
     assert audit_web.audit(str(tmp_path))["compare_functions_missing_purpose"] == ["nope"]
+
+
+def test_controls_js_is_inventoried_and_needs_purpose_lines(tmp_path):
+    (tmp_path / "controls.js").write_text("// purpose: ok\nexport function good() {}\nexport function bad() {}\n")
+    r = audit_web.audit(str(tmp_path))
+    assert [n for n, _ in r["controls_functions"]] == ["good"]
+    assert r["controls_functions_missing_purpose"] == ["bad"] and not r["ok"]
+
+
+def test_controls_js_may_not_reference_engine(tmp_path):
+    (tmp_path / "controls.js").write_text("// purpose: x\nimport { Engine } from './engine.js';\nexport function f() {}\n")
+    r = audit_web.audit(str(tmp_path))
+    assert "controls.js" in r["engine_references_in_main_page"] and not r["ok"]

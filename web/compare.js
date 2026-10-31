@@ -1,6 +1,7 @@
 // Comparison page: runs the model (web/model/snake.onnx) and a REAL hand-written engine (web/engine.js) side by side on the same keys and ticks.
 // This is the only page allowed to import engine.js; scripts/audit_web.py fails if index.html or main.js reference it.
 import { Engine, RIGHT, NOOP } from './engine.js';
+import { installControls } from './controls.js'; // on-screen buttons and swipe: they only call setPending(action), exactly like an arrow key
 
 const N = 12;
 const TICK_MS = 150;
@@ -77,7 +78,7 @@ function compareGrids(a, b) {
 function render(diff, summary) {
   drawGrid(el('model'), state.modelGrid, diff);
   drawGrid(el('engine'), state.engine.grid14(), null);
-  el('backend').textContent = state.backend;
+  el('backend').textContent = state.backend || 'loading...';
   el('steps').textContent = String(state.steps);
   el('first').textContent = state.firstDivergence === null ? 'none yet' : 'step ' + state.firstDivergence;
   el('mism').textContent = String(state.mismatched) + ' of ' + state.steps;
@@ -112,9 +113,14 @@ async function tick() {
   state.busy = false;
 }
 
+// purpose: remember an action index (0 UP, 1 DOWN, 2 LEFT, 3 RIGHT) for the next tick; both sides get it. Arrow keys, on-screen buttons and swipes all end up here.
+function setPending(action) {
+  state.pendingAction = action;
+}
+
 // purpose: map an arrow key to an action index for the next tick (both sides get the same key); Space/Enter restarts both.
 function onKey(ev) {
-  if (ev.key in KEY_TO_ACTION) { state.pendingAction = KEY_TO_ACTION[ev.key]; ev.preventDefault(); }
+  if (ev.key in KEY_TO_ACTION) { setPending(KEY_TO_ACTION[ev.key]); ev.preventDefault(); }
   else if (ev.key === ' ' || ev.key === 'Enter') { ev.preventDefault(); restart(); }
 }
 
@@ -140,6 +146,7 @@ async function main() {
   }
   render(null, 'start state');
   window.addEventListener('keydown', onKey);
+  installControls({ buttons: document.querySelectorAll('#pad button'), swipeTargets: [el('model'), el('engine')], onAction: setPending });
   el('restart').addEventListener('click', restart);
   setInterval(tick, TICK_MS);
 }

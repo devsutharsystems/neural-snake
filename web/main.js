@@ -1,5 +1,7 @@
 // Neural Snake main page. This file contains NO game rules: every next frame comes from the model (web/model/snake.onnx).
 // Every function carries a "// purpose:" line directly above it; scripts/audit_web.py prints them as the "what the JS still does" list.
+import { installControls } from './controls.js'; // on-screen buttons and swipe: they only call setPending(action), exactly like an arrow key
+
 const N = 12;
 const TICK_MS = 150;
 const NOOP = 4;
@@ -63,7 +65,7 @@ function draw() {
 // purpose: show the backend, median step time, step count, the model's last ate / game-over probabilities and the game-over banner.
 function renderStatus(probs) {
   const sorted = [...state.times].sort((a, b) => a - b);
-  el('backend').textContent = state.backend + (state.note ? ' (' + state.note + ')' : '');
+  el('backend').textContent = state.backend ? state.backend + (state.note ? ' (' + state.note + ')' : '') : 'loading model...';
   el('ms').textContent = sorted.length ? sorted[Math.floor(sorted.length / 2)].toFixed(2) + ' (n=' + sorted.length + ')' : '-';
   el('steps').textContent = String(state.steps);
   if (probs) el('probs').textContent = 'p(ate)=' + probs.ate.toFixed(3) + '  p(game over)=' + probs.over.toFixed(3);
@@ -111,9 +113,14 @@ async function tick() {
   state.busy = false;
 }
 
+// purpose: remember an action index (0 UP, 1 DOWN, 2 LEFT, 3 RIGHT) for the next tick; the one place where arrow keys, on-screen buttons and swipes all end up.
+function setPending(action) {
+  state.pendingAction = action;
+}
+
 // purpose: map an arrow key to an action index and remember it for the next tick; Space/Enter restarts.
 function onKey(ev) {
-  if (ev.key in KEY_TO_ACTION) { state.pendingAction = KEY_TO_ACTION[ev.key]; ev.preventDefault(); }
+  if (ev.key in KEY_TO_ACTION) { setPending(KEY_TO_ACTION[ev.key]); ev.preventDefault(); }
   else if (ev.key === ' ' || ev.key === 'Enter') { ev.preventDefault(); restart(); }
 }
 
@@ -127,7 +134,7 @@ function restart() {
   renderStatus(null);
 }
 
-// purpose: page start-up: load the start state, create the session (WebGPU first), wire the keyboard / button, start the 150 ms timer.
+// purpose: page start-up: load the start state, create the session (WebGPU first), wire the keyboard, touch controls and restart button, start the 150 ms timer.
 async function main() {
   state.start = await loadJSON(START_URL);
   restart();
@@ -139,6 +146,7 @@ async function main() {
   }
   renderStatus(null);
   window.addEventListener('keydown', onKey);
+  installControls({ buttons: document.querySelectorAll('#pad button'), swipeTargets: [canvas], onAction: setPending });
   el('restart').addEventListener('click', restart);
   setInterval(tick, TICK_MS);
 }

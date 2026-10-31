@@ -12,10 +12,13 @@
   h1 { font-size: 20px; margin: 0 0 4px; }
   p { margin: 6px 0; }
   .muted { color: var(--muted); font-size: 13px; }
-  canvas { display: block; width: 100%; max-width: 480px; aspect-ratio: 1; border: 1px solid var(--line); image-rendering: pixelated; margin: 12px 0; }
-  dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; margin: 8px 0; font-variant-numeric: tabular-nums; }
+  canvas { display: block; box-sizing: border-box; width: 100%; max-width: 480px; aspect-ratio: 1; border: 1px solid var(--line); image-rendering: pixelated; margin: 12px 0; touch-action: none; user-select: none; -webkit-user-select: none; }
+  dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px 12px; margin: 8px 0; font-variant-numeric: tabular-nums; }
   dt { color: var(--muted); }
-  dd { margin: 0; }
+  dd { margin: 0; overflow-wrap: anywhere; }
+  #pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 320px; margin: 8px auto 16px; }
+  #pad button { min-height: 64px; font-size: 28px; line-height: 1; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+  #pad .up { grid-column: 2; grid-row: 1; } #pad .left { grid-column: 1; grid-row: 2; } #pad .down { grid-column: 2; grid-row: 2; } #pad .right { grid-column: 3; grid-row: 2; }
   button { font: inherit; padding: 6px 14px; }
   #banner { min-height: 1.5em; font-weight: 600; color: #c62828; }
   a { color: var(--accent); }
@@ -24,9 +27,15 @@
 <body>
 <main>
   <h1>Neural Snake</h1>
-  <p class="muted">No game code runs here. A small neural network predicts every next frame from the current frame and your key. Arrow keys steer; with no key the snake keeps going (NOOP).</p>
+  <p class="muted">No game code runs here. A small neural network predicts every next frame from the current frame and your key. Arrow keys, the buttons below or a swipe on the board steer; with no input the snake keeps going (NOOP).</p>
   <canvas id="board" width="480" height="480" aria-label="Snake board produced by the model"></canvas>
   <div id="banner" role="status"></div>
+  <div id="pad" aria-label="Direction buttons">
+    <button type="button" class="up" data-action="0" aria-label="Up">&#9650;</button>
+    <button type="button" class="left" data-action="2" aria-label="Left">&#9664;</button>
+    <button type="button" class="down" data-action="1" aria-label="Down">&#9660;</button>
+    <button type="button" class="right" data-action="3" aria-label="Right">&#9654;</button>
+  </div>
   <dl>
     <dt>Backend running</dt><dd id="backend">loading model...</dd>
     <dt>Median ms / step</dt><dd id="ms">-</dd>
