@@ -47,12 +47,12 @@ Separate page, labelled "runs a real engine for comparison only". JS port of the
 ## 7. Requirements traceability
 | Req | Requirement | Verification | Evidence file | Status |
 |---|---|---|---|---|
-| 1 | Playable, model-produced frames | manual play in a browser + grep of index.html JS for game rules (none allowed) | web/index.html (does not exist yet) | **Day 3** |
+| 1 | Playable, model-produced frames | manual play in a browser + grep of index.html JS for game rules (none allowed) | compare.html game in Chrome: one 210-step game ending in game over on both sides, first divergence none, 0 of 210 steps mismatched (manual, by Dev; docs/browser_checks.md); no-rules check: scripts/audit_web.py (index.html/main.js may not reference engine.js) | **Done** (manual, Chrome) |
 | 2 | Tiny, from scratch, params reported | param count printed at train; ONNX file size at export | spikes/spike_a/results_v3.json (78,177 params, `Net3` dil C=32); trained from random init in v3.py/run2.py | **Done** (ONNX size reported Day 3) |
 | 3 | PyTorch training | train scripts + logs | spikes/spike_a/v3.py, run1.py, run2.py; run2.log; results_run2.json | **Done** |
 | 4 | Free hardware, real time stated | train log with device and wall time | spikes/spike_a/results_run2.json (device MPS, 1,503.4 s, 7,335 samples/s); Colab not used | **Done** |
-| 5 | WebGPU + WASM fallback, page shows actual backend | ONNX parity + headed-Chrome bench; page label | spikes/spike_b/bench.html, export_results.json (random-weight net only) | **Day 3** (needs Dev's browser numbers) |
-| 6 | Free, static, no CDN | file audit of web/ (no external URLs); license file for vendored ORT | web/vendor/ (43.8 MB, no LICENSE file yet) | **Day 3** |
+| 5 | WebGPU + WASM fallback, page shows actual backend | ONNX parity + headed-Chrome run; page label; node-placement log (`?verbose=1`) | Chrome 156 / Apple M2 (manual, by Dev; docs/browser_checks.md): after the Cast fix `All nodes placed on [WebGpuExecutionProvider]. Number of nodes: 74` (before: 1 CPU + 75 WebGPU); default page backend `webgpu`, median 9.10 ms/step; `?backend=wasm` shows `wasm (WASM forced by ?backend=wasm)`, median 3.20 ms/step; both far under the 150 ms tick. Parity: web/model/parity_results.json; WASM EP also checked in Node: web/model/wasm_node_check.json | **Done** (all 74 nodes on WebGPU, verified in Chrome; WASM fallback verified in Chrome) |
+| 6 | Free, static, no CDN | file audit of web/ (no external URLs); license file for vendored ORT | scripts/audit_web.py (passes; tests/test_audit_web.py); web/vendor/LICENSE (MIT) and ThirdPartyNotices.txt from microsoft/onnxruntime v1.31.1, web/vendor/README.md (sources, sha256) | **Done** |
 | 7 | Verified WorldTUI sentence | docs/facts.md rows a-e | docs/facts.md | **Done** (verified via fetch summary) |
 | 8 | Honest failure evaluation | validation failure analysis now; held-out evaluation once | validation: spikes/spike_a/results_run2.json/.md (failure grids), diag_run1.json (Run 1 failure), diag_run2.json; held-out: none yet | validation **Done**; held-out **Day 4** |
 

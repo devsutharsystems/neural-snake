@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neural Snake</title>
+<style>
+  :root { color-scheme: light dark; --bg: #fafafa; --fg: #1b1b1b; --muted: #666; --line: #cfcfcf; --accent: #1b5e20; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #151515; --fg: #ececec; --muted: #9a9a9a; --line: #3a3a3a; --accent: #81c784; } }
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--fg); font: 15px/1.45 system-ui, sans-serif; }
+  main { max-width: 520px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p { margin: 6px 0; }
+  .muted { color: var(--muted); font-size: 13px; }
+  canvas { display: block; width: 100%; max-width: 480px; aspect-ratio: 1; border: 1px solid var(--line); image-rendering: pixelated; margin: 12px 0; }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; margin: 8px 0; font-variant-numeric: tabular-nums; }
+  dt { color: var(--muted); }
+  dd { margin: 0; }
+  button { font: inherit; padding: 6px 14px; }
+  #banner { min-height: 1.5em; font-weight: 600; color: #c62828; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Neural Snake</h1>
+  <p class="muted">No game code runs here. A small neural network predicts every next frame from the current frame and your key. Arrow keys steer; with no key the snake keeps going (NOOP).</p>
+  <canvas id="board" width="480" height="480" aria-label="Snake board produced by the model"></canvas>
+  <div id="banner" role="status"></div>
+  <dl>
+    <dt>Backend running</dt><dd id="backend">loading model...</dd>
+    <dt>Median ms / step</dt><dd id="ms">-</dd>
+    <dt>Steps this run</dt><dd id="steps">0</dd>
+    <dt>Model outputs</dt><dd id="probs">-</dd>
+  </dl>
+  <p><button id="restart" type="button">Restart (reload start state)</button></p>
+  <p class="muted">Backends: <a href="./index.html">WebGPU first</a> · <a href="./index.html?backend=wasm">force WASM</a> · <a href="./index.html?verbose=1">log node placement</a> (open the console and look for "Node placements") · <a href="./compare.html">compare with a real engine</a>. The model sometimes makes mistakes (for example food appearing on the snake); they are shown as produced, never corrected.</p>
+</main>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

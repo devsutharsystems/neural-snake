@@ -1,0 +1,28 @@
+{
+ "command": "scripts/parity_onnx.py",
+ "onnxruntime_py": "1.31.1",
+ "onnx_file": "web/model/snake.onnx",
+ "validation_1000": {
+  "rows": 1000,
+  "grid_mismatches": 0,
+  "ate_decision_mismatches": 0,
+  "over_decision_mismatches": 0,
+  "max_abs_prob_diff": {
+   "food": 1.5273690223693848e-07,
+   "ate": 5.960464477539063e-08,
+   "over": 1.1920928955078125e-07
+  }
+ },
+ "closed_loop": {
+  "rollouts": 20,
+  "steps_each": 200,
+  "grid_mismatches": 0,
+  "state_divergences": 0,
+  "ate_decision_mismatches": 0,
+  "over_decision_mismatches": 0,
+  "ate_events": 404,
+  "game_over_resets": 71,
+  "food_on_snake_writes": 0,
+  "max_abs_prob_diff": 1.564621925354004e-07
+ }
+}

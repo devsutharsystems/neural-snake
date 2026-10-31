@@ -1,0 +1,86 @@
+{
+ "command": "scripts/export_onnx.py",
+ "checkpoint": "checkpoints/run2_best.pt (git-ignored)",
+ "torch": "2.15.0",
+ "onnx": "1.23.2",
+ "onnxruntime_py": "1.31.1",
+ "opset": {
+  "ai.onnx": 18
+ },
+ "file_bytes": 396375,
+ "params": 78177,
+ "over_shift": 2.9034454822540283,
+ "ate_shift": 1.3305909633636475,
+ "op_counts": {
+  "Add": 10,
+  "ArgMax": 1,
+  "Cast": 2,
+  "Concat": 7,
+  "Conv": 11,
+  "Equal": 2,
+  "Expand": 2,
+  "Gather": 2,
+  "Gemm": 5,
+  "ReduceMax": 3,
+  "ReduceMean": 3,
+  "Relu": 12,
+  "Reshape": 3,
+  "Sigmoid": 3,
+  "Slice": 1,
+  "Softmax": 1,
+  "Squeeze": 2,
+  "Sub": 2,
+  "Unsqueeze": 6
+ },
+ "inputs": [
+  [
+   "grid",
+   6,
+   [
+    1,
+    12,
+    12
+   ]
+  ],
+  [
+   "action",
+   6,
+   [
+    1
+   ]
+  ]
+ ],
+ "outputs": [
+  [
+   "next_grid",
+   7,
+   [
+    1,
+    12,
+    12
+   ]
+  ],
+  [
+   "food",
+   1,
+   [
+    1,
+    144
+   ]
+  ],
+  [
+   "ate",
+   1,
+   [
+    1
+   ]
+  ],
+  [
+   "over",
+   1,
+   [
+    1
+   ]
+  ]
+ ]
+}

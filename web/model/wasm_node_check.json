@@ -1,0 +1,71 @@
+{
+ "command": "scripts/check_wasm_node.py (node scripts/ort_wasm_node.mjs, vendored ort.wasm.min.mjs 1.31.1, executionProviders=['wasm'])",
+ "node_not_browser": true,
+ "rows": [
+  {
+   "action": 0,
+   "grid_identical": true,
+   "max_abs_food_diff": 6.05359673500061e-08,
+   "ate_diff": 0.0,
+   "over_diff": 0.0,
+   "wasm_output_types": [
+    "int64",
+    "float32",
+    "float32",
+    "float32"
+   ]
+  },
+  {
+   "action": 1,
+   "grid_identical": true,
+   "max_abs_food_diff": 3.166496753692627e-08,
+   "ate_diff": 0.0,
+   "over_diff": 0.0,
+   "wasm_output_types": [
+    "int64",
+    "float32",
+    "float32",
+    "float32"
+   ]
+  },
+  {
+   "action": 2,
+   "grid_identical": true,
+   "max_abs_food_diff": 2.8405338525772095e-08,
+   "ate_diff": 0.0,
+   "over_diff": 0.0,
+   "wasm_output_types": [
+    "int64",
+    "float32",
+    "float32",
+    "float32"
+   ]
+  },
+  {
+   "action": 3,
+   "grid_identical": true,
+   "max_abs_food_diff": 4.6566128730773926e-08,
+   "ate_diff": 0.0,
+   "over_diff": 0.0,
+   "wasm_output_types": [
+    "int64",
+    "float32",
+    "float32",
+    "float32"
+   ]
+  },
+  {
+   "action": 4,
+   "grid_identical": true,
+   "max_abs_food_diff": 2.8870999813079834e-08,
+   "ate_diff": 0.0,
+   "over_diff": 0.0,
+   "wasm_output_types": [
+    "int64",
+    "float32",
+    "float32",
+    "float32"
+   ]
+  }
+ ]
+}
