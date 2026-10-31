@@ -156,7 +156,8 @@ def facts(src):
 
 # numbers quoted from docs/browser_checks.md (manual Chrome results): the string must be in BOTH that file and the README
 BROWSER_FACTS = ("9.10 ms", "3.20 ms", "Number of nodes: 74", "Chrome 156.0.8078.76", "0 of 132",
-                 "Samsung S20+ 5G", "33.7 and 38.5 ms/step", "4.40 ms/step", "81-step game", "6 food cells")
+                 "Samsung S20+ 5G", "33.7 and 38.5 ms/step", "4.40 ms/step", "81-step game", "6 food cells",
+                 "4.14e-3", "1.37e-2", "4.97e-7", "5.25e-7", "174 and 110 steps", "5.60 ms/step", "5.40 ms/step", "Vulkan: Disabled")
 
 
 def check(readme, src=None):
