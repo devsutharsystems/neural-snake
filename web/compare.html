@@ -4,38 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Neural Snake: comparison</title>
-<style>
-  :root { color-scheme: light dark; --bg: #fafafa; --fg: #1b1b1b; --muted: #666; --line: #cfcfcf; --accent: #1b5e20; --warn-bg: #fff3cd; --warn-fg: #5c4400; }
-  @media (prefers-color-scheme: dark) { :root { --bg: #151515; --fg: #ececec; --muted: #9a9a9a; --line: #3a3a3a; --accent: #81c784; --warn-bg: #4a3b00; --warn-fg: #ffe9a6; } }
-  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.45 system-ui, sans-serif; }
-  #banner { background: var(--warn-bg); color: var(--warn-fg); padding: 12px 16px; font-weight: 600; border-bottom: 2px solid var(--warn-fg); }
-  main { max-width: 1040px; margin: 0 auto; padding: 16px; }
-  h1 { font-size: 20px; margin: 4px 0; }
-  .boards { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
-  figure { margin: 0; }
-  figcaption { font-weight: 600; margin-bottom: 4px; }
-  canvas { display: block; box-sizing: border-box; width: 100%; aspect-ratio: 1; border: 1px solid var(--line); touch-action: none; user-select: none; -webkit-user-select: none; }
-  dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px 12px; margin: 12px 0; font-variant-numeric: tabular-nums; }
-  dt { color: var(--muted); }
-  dd { margin: 0; overflow-wrap: anywhere; }
-  #selftest { font: 11px/1.4 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; border: 1px solid var(--line); padding: 8px; margin: 8px 0; }
-  #pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 320px; margin: 12px auto 8px; }
-  #pad button { min-height: 64px; font-size: 28px; line-height: 1; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
-  #pad .up { grid-column: 2; grid-row: 1; } #pad .left { grid-column: 1; grid-row: 2; } #pad .down { grid-column: 2; grid-row: 2; } #pad .right { grid-column: 3; grid-row: 2; }
-  .muted { color: var(--muted); font-size: 13px; }
-  button { font: inherit; padding: 6px 14px; }
-  a { color: var(--accent); }
-  @media (max-width: 640px) { .boards { grid-template-columns: minmax(0, 1fr); } }
-</style>
+<link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <div id="banner" role="note">Comparison page — runs a REAL hand-written Snake engine beside the model, for comparison only. The main game page contains no game rules.</div>
-<main>
-  <h1>Model vs real engine</h1>
-  <p class="muted">The same keypresses and 150 ms ticks drive both. Arrow keys, the buttons below the boards or a swipe on either board steer; no input means NOOP. The run stops as soon as either side says game over. Red outlines on the model board mark cells where the model's grid differs from the engine's.</p>
+<header class="top wide">
+  <div class="brand"><h1>Model vs real engine</h1><span class="badge">Comparison only</span></div>
+  <p class="claim">The same keypresses and 150 ms ticks drive both. Arrow keys, the buttons below the boards or a swipe on either board steer; no input means NOOP. The run stops as soon as either side says game over. Red outlines on the model board mark cells where the model's grid differs from the engine's.</p>
+</header>
+<main class="wide">
   <div class="boards">
-    <figure><figcaption>Model (neural network, <span id="backend">loading...</span>)</figcaption><canvas id="model" width="480" height="480"></canvas></figure>
-    <figure><figcaption>Real engine (hand-written rules, web/engine.js)</figcaption><canvas id="engine" width="480" height="480"></canvas></figure>
+    <figure>
+      <figcaption>Model (neural network, <span id="backend">loading...</span>)</figcaption>
+      <div class="board-wrap"><div class="board-panel"><div class="board-inner">
+        <canvas id="model" width="480" height="480" aria-label="Board produced by the model"></canvas>
+        <div id="orbsModel" class="orbs" aria-hidden="true"></div>
+        <div id="overModel" class="over" role="status"></div>
+      </div></div></div>
+    </figure>
+    <figure>
+      <figcaption>Real engine (hand-written rules, web/engine.js)</figcaption>
+      <div class="board-wrap"><div class="board-panel"><div class="board-inner">
+        <canvas id="engine" width="480" height="480" aria-label="Board produced by the hand-written engine"></canvas>
+        <div id="orbsEngine" class="orbs" aria-hidden="true"></div>
+        <div id="overEngine" class="over" role="status"></div>
+      </div></div></div>
+    </figure>
   </div>
   <div id="pad" aria-label="Direction buttons">
     <button type="button" class="up" data-action="0" aria-label="Up">&#9650;</button>
@@ -43,16 +37,18 @@
     <button type="button" class="down" data-action="1" aria-label="Down">&#9660;</button>
     <button type="button" class="right" data-action="3" aria-label="Right">&#9654;</button>
   </div>
-  <dl>
-    <dt>Steps this run</dt><dd id="steps">0</dd>
-    <dt>First divergence</dt><dd id="first">none yet</dd>
-    <dt>Mismatched steps so far</dt><dd id="mism">0</dd>
-    <dt>This step</dt><dd id="now">-</dd>
-    <dt>Food sync (comparison aid)</dt><dd>After every eat by the real engine, the model board's food is replaced by the engine's food, so a wrong food guess does not mask later steps. The model's own food guess is never used on this page.</dd>
-    <dt>Game over</dt><dd id="over">-</dd>
-  </dl>
-  <pre id="selftest" hidden></pre>
-  <p><button id="restart" type="button">Restart both</button> <a href="./index.html">Back to the game page (model only)</a></p>
+  <section class="card">
+    <dl>
+      <dt>Steps this run</dt><dd id="steps">0</dd>
+      <dt>First divergence</dt><dd id="first">none yet</dd>
+      <dt>Mismatched steps so far</dt><dd id="mism">0</dd>
+      <dt>This step</dt><dd id="now">-</dd>
+      <dt>Food sync (comparison aid)</dt><dd>After every eat by the real engine, the model board's food is replaced by the engine's food, so a wrong food guess does not mask later steps. The model's own food guess is never used on this page.</dd>
+      <dt>Game over</dt><dd id="over">-</dd>
+    </dl>
+    <pre id="selftest" hidden></pre>
+    <p><button id="restart" class="primary" type="button">Restart both</button> <a href="./index.html">Back to the game page (model only)</a></p>
+  </section>
 </main>
 <script type="module" src="./compare.js"></script>
 </body>

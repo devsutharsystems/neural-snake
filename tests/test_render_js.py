@@ -1,0 +1,16 @@
+"""Runs the Node test of web/render.js (tests/js/render.test.mjs): the renderer paints a frame only from that frame's cell classes."""
+import os
+import re
+import shutil
+import subprocess
+
+import pytest
+
+ROOT = os.path.join(os.path.dirname(__file__), "..")
+pytestmark = pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+
+
+def test_render_js_node_tests_pass():
+    r = subprocess.run(["node", "--test", "tests/js/render.test.mjs"], cwd=ROOT, capture_output=True, text=True)
+    assert r.returncode == 0, r.stdout[-3000:] + r.stderr[-1000:]
+    assert int(re.search(r"ℹ pass (\d+)", r.stdout).group(1)) == 10

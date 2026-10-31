@@ -2,13 +2,13 @@
 // Every function carries a "// purpose:" line directly above it; scripts/audit_web.py prints them as the "what the JS still does" list.
 import { installControls } from './controls.js'; // on-screen buttons and swipe: they only call setPending(action), exactly like an arrow key
 import { chooseBackend, formatReports, errorText } from './selftest.js'; // runtime self-test: golden cases = the model's own recorded outputs, no game rules
+import { fitCanvas, drawBoard, placeOrbs } from './render.js'; // drawing only: paints one frame from the cell classes it is given
 
 const N = 12;
 const TICK_MS = 150;
 const NOOP = 4;
 const VERBOSE = new URLSearchParams(location.search).get('verbose') === '1';
 const KEY_TO_ACTION = { ArrowUp: 0, ArrowDown: 1, ArrowLeft: 2, ArrowRight: 3 };
-const COLORS = ['#f5f5f5', '#e53935', ...Array(4).fill('#1b5e20'), ...Array(4).fill('#43a047'), ...Array(4).fill('#a5d6a7')];
 const BASE = new URL('./', import.meta.url);
 const VENDOR = new URL('vendor/', BASE).href;
 const MODEL_URL = new URL('model/snake.onnx', BASE).href;
@@ -20,6 +20,7 @@ const SELFTEST_PANEL = new URLSearchParams(location.search).get('selftest') === 
 const el = (id) => document.getElementById(id);
 const canvas = el('board');
 const ctx = canvas.getContext('2d');
+const boardPx = fitCanvas(canvas); // canvas backing store: 480 px, or 960 px on high-density screens
 const state = { ort: null, session: null, backend: null, note: '', reports: [], grid: null, start: null, over: false, busy: false, pendingAction: NOOP, steps: 0, times: [] };
 
 // purpose: fetch a JSON file that ships with the page (the engine-generated start state).
@@ -65,13 +66,10 @@ function renderSelfTestPanel() {
   el('selftest').textContent = formatReports(state.reports, 'Self-test ' + new Date().toISOString() + '\nuserAgent: ' + navigator.userAgent);
 }
 
-// purpose: paint the current class grid onto the canvas, one coloured square per cell (class to colour lookup only).
+// purpose: paint the current class grid (the model's latest frame) with the shared renderer: tiles, the snake from its direction classes, and one orb per food cell. Nothing is carried over from earlier frames.
 function draw() {
-  const s = canvas.width / N;
-  for (let i = 0; i < N * N; i++) {
-    ctx.fillStyle = COLORS[state.grid[i]] || '#ff00ff';
-    ctx.fillRect((i % N) * s, Math.floor(i / N) * s, s - 1, s - 1);
-  }
+  drawBoard(ctx, state.grid, boardPx);
+  placeOrbs(el('orbs'), state.grid);
 }
 
 // purpose: show the backend, median step time, step count, the model's last ate / game-over probabilities and the game-over banner.

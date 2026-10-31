@@ -23,10 +23,11 @@ ALLOWED = {"vendor/ort.wasm.min.mjs": {b"https://web.dev/cross-origin-isolation-
            "vendor/ort.webgpu.min.mjs": {b"https://web.dev/cross-origin-isolation-guide/"},
            "vendor/ort-wasm-simd-threaded.wasm": WASM_STRINGS, "vendor/ort-wasm-simd-threaded.asyncify.wasm": WASM_STRINGS}
 # the main game page must contain no game rules, so it (and the input module it shares with compare.html) may not touch web/engine.js
-NO_ENGINE_FILES = ("index.html", "main.js", "controls.js", "selftest.js")
+NO_ENGINE_FILES = ("index.html", "main.js", "controls.js", "selftest.js", "render.js")
 # modules shared by the game page and compare.html: each is inventoried and every function needs a purpose line
 SHARED_MODULES = {"controls.js": "Touch / swipe / button input (web/controls.js, shared with compare.html; it only reports an action index)",
-                  "selftest.js": "Runtime self-test and backend choice (web/selftest.js, shared with compare.html; compares the model with its own recorded outputs)"}
+                  "selftest.js": "Runtime self-test and backend choice (web/selftest.js, shared with compare.html; compares the model with its own recorded outputs)",
+                  "render.js": "Board drawing (web/render.js, shared with compare.html; paints one frame from the cell classes it is given, nothing carried between frames)"}
 ENGINE_RE = re.compile(r"engine\.js|(?:from|import\s*\()\s*['\"][^'\"]*engine")
 FUNC_RE = re.compile(r"^\s*(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(|^\s*(?:export\s+)?const\s+(\w+)\s*=\s*(?:async\s*)?(?:\([^)]*\)|\w+)\s*=>")
 
@@ -115,7 +116,7 @@ def main():
             print(f"  MISSING PURPOSE LINE in {mod}: {name}()")
     for name in r["compare_functions_missing_purpose"]:
         print(f"  MISSING PURPOSE LINE in compare.js: {name}()")
-    print("\nengine.js references in index.html / main.js / controls.js / selftest.js: " + (", ".join(r["engine_references_in_main_page"]) + "  <- FORBIDDEN" if r["engine_references_in_main_page"] else "none (compare.html / compare.js may use it)"))
+    print("\nengine.js references in index.html / main.js / controls.js / selftest.js / render.js: " + (", ".join(r["engine_references_in_main_page"]) + "  <- FORBIDDEN" if r["engine_references_in_main_page"] else "none (compare.html / compare.js may use it)"))
     print("\nAUDIT " + ("PASSED" if r["ok"] else "FAILED"))
     return 0 if r["ok"] else 1
 

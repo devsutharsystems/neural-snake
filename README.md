@@ -16,7 +16,7 @@ The page draws the board it gets back and feeds it into the next tick. Walls, se
 
 ## What the JavaScript still does
 
-`web/main.js` is the whole game page, plus two small modules that the compare page shares: `web/controls.js` (on-screen buttons and swipe, for phones that have no arrow keys) and `web/selftest.js` (a runtime self-test that checks the model's outputs on this device against outputs recorded from the same model, and picks the backend). The lists below are printed by `scripts/audit_web.py`, which also fails if a function lacks a purpose line, if any file in `web/` references an external URL, or if `index.html`, `main.js`, `controls.js` or `selftest.js` reference the hand-written engine (`web/engine.js`, used only by `compare.html`).
+`web/main.js` is the whole game page, plus three small modules that the compare page shares: `web/controls.js` (on-screen buttons and swipe, for phones that have no arrow keys), `web/selftest.js` (a runtime self-test that checks the model's outputs on this device against outputs recorded from the same model, and picks the backend) and `web/render.js` (drawing the board). The look of the pages is plain CSS in `web/style.css` (no images, no web fonts, no libraries). The lists below are printed by `scripts/audit_web.py`, which also fails if a function lacks a purpose line, if any file in `web/` references an external URL, or if `index.html`, `main.js`, `controls.js`, `selftest.js` or `render.js` reference the hand-written engine (`web/engine.js`, used only by `compare.html`).
 
 - `el()`: shorthand for `document.getElementById`.
 - `loadJSON()`: fetch a JSON file that ships with the page (the engine-generated start state).
@@ -24,7 +24,7 @@ The page draws the board it gets back and feeds it into the next tick. Walls, se
 - `openBackend()`: open a session for one named backend (the WebGPU bundle or the WASM bundle).
 - `createSession()`: load the self-test cases and choose the backend: WebGPU first and only if it passes the self-test, otherwise WASM (also self-tested; if that fails too the page does not play). It records which backend is really running and why, and the page shows it.
 - `renderSelfTestPanel()`: with `?selftest=1`, show the result of every self-test case on every backend tried (pass or fail, differing cells, largest probability difference).
-- `draw()`: paint the current class grid on the canvas, one coloured square per cell.
+- `draw()`: paint the current class grid (the model's latest frame) with the shared renderer: tiles, the snake from its direction classes, and one orb per food cell. Nothing is carried over from earlier frames.
 - `renderStatus()`: show the backend, median step time, step count, the model's last ate / game-over probabilities and the game-over banner.
 - `sampleCell()`: draw one cell from the model's food probabilities with `Math.random`. Nothing is checked or resampled.
 - `step()`: one model call: send (grid, action), take the model's argmax grid as the next state, write a sampled food cell if p(ate) > 0.5, flag game over if p(game over) > 0.5.
@@ -50,6 +50,24 @@ Runtime self-test (`web/selftest.js`, cases in `web/model/selftest.json`). It ru
 - `discard()`: release a session we are throwing away.
 - `chooseBackend()`: WebGPU first and kept only if it passes; otherwise discard it and use WASM, also self-tested; if no backend passes, throw so that the page does not play.
 - `formatReports()`: turn the reports into the text shown by `?selftest=1`.
+
+Drawing (`web/render.js`). **Honesty rule:** a frame is painted only from the cell classes of the frame it is given, including the model's own direction classes for head, body and tail. There is no interpolation between frames, no state kept from one frame to the next, and no inferring of movement; a wrong cell from the model is drawn as it is. The head's eyes face the head-direction class, the body joins toward the neighbour its direction class points at, and the tail tapers away from its class's neighbour. `tests/js/render.test.mjs` checks these points with a recording stand-in for the canvas. The food orb's gentle pulse is a CSS animation of decoration, switched off under `prefers-reduced-motion`; the orb's position is set directly, never animated.
+
+- `fitCanvas()`: make the canvas backing store 480 px, or 960 px on high-density screens, so the board is sharp.
+- `makeLayer()`: create an offscreen drawing surface.
+- `rrect()`: add a rounded rectangle to the current path.
+- `tileLayer()`: the layer of 144 empty tiles, built once per size; static decoration that does not depend on any frame.
+- `chainDepth()`: from this frame's direction classes, how far each snake cell is from the head; used only to shade the body darker toward the tail.
+- `bodyColor()`: the colour of a body segment (glossy green, slightly darker toward the tail).
+- `pillPath()`: the rounded bar from a body cell to the neighbour its direction class points at.
+- `tailTaper()`: the tapered tail end.
+- `headPath()`: the head, a larger rounder block stretched along its direction class.
+- `drawEyes()`: two eyes facing the head-direction class.
+- `drawSnake()`: paint the snake of this frame (shadow, colour, gloss, then head and eyes).
+- `shape()`: add the path of one snake part to the context.
+- `drawDiff()`: red outlines for cells flagged as different (compare page only).
+- `drawBoard()`: paint one frame: the static tiles, the snake and the optional outlines.
+- `placeOrbs()`: show one food orb per food cell of this frame, reusing elements so the CSS pulse keeps running.
 
 **Borderline items, stated plainly.** Some people would count these as game logic:
 

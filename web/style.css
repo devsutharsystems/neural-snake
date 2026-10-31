@@ -1,0 +1,132 @@
+/* Neural Snake v1.1 "dark arcade glass". CSS only: no images, no web fonts (system font stack), no external URLs. Shared by index.html and compare.html. */
+:root {
+  color-scheme: dark;
+  --font: ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --bg0: #070a12; --bg1: #0d1220; --bg2: #1b2547;
+  --fg: #e8eefc; --muted: #93a0bd; --line: rgba(255, 255, 255, 0.14);
+  --accent: #5dffa0; --warn-bg: rgba(255, 209, 102, 0.12); --warn-fg: #ffd166;
+  --glass: rgba(255, 255, 255, 0.06);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; color: var(--fg); font: 15px/1.5 var(--font);
+  background: radial-gradient(1300px 820px at 50% -8%, var(--bg2) 0%, var(--bg1) 48%, var(--bg0) 100%) fixed;
+}
+body::before { /* soft vignette */
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse at 50% 45%, transparent 52%, rgba(0, 0, 0, 0.55) 100%);
+}
+body > * { position: relative; z-index: 1; }
+a { color: var(--accent); }
+.muted { color: var(--muted); font-size: 13px; }
+
+/* header */
+.top { max-width: 560px; margin: 0 auto; padding: 22px 16px 4px; }
+.top.wide { max-width: 1040px; }
+.brand { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+h1 {
+  margin: 0; font-size: 30px; line-height: 1.15; letter-spacing: 0.02em;
+  background: linear-gradient(90deg, #a6ffca, #52e2ff); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.badge {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px;
+  color: var(--accent); border: 1px solid rgba(93, 255, 160, 0.5); background: rgba(93, 255, 160, 0.08); box-shadow: 0 0 14px rgba(93, 255, 160, 0.25);
+}
+.claim { margin: 6px 0 0; color: var(--muted); }
+
+main { max-width: 560px; margin: 0 auto; padding: 0 16px 28px; }
+main.wide { max-width: 1040px; }
+
+/* the board: a raised glass panel (flat on phones, tilted on wide screens) */
+.board-wrap { perspective: 1400px; margin: 14px auto 8px; max-width: 520px; }
+.board-panel {
+  padding: 12px; border-radius: 24px; transform-origin: 50% 100%;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 34px 60px -12px rgba(0, 0, 0, 0.65), 0 10px 24px rgba(0, 0, 0, 0.45),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -24px 40px rgba(0, 0, 0, 0.35);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+.board-inner { position: relative; border-radius: 14px; overflow: hidden; }
+.board-inner canvas { display: block; width: 100%; aspect-ratio: 1; touch-action: none; user-select: none; -webkit-user-select: none; }
+.board-inner::after { /* inner shadow: a replaced element cannot carry its own inset shadow */
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 3;
+  box-shadow: inset 0 0 28px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+@media (min-width: 700px) { .board-panel { transform: rotateX(12deg); } }
+
+/* food: one glowing orb element per food cell of the current frame; its position is set directly, never animated */
+.orbs { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.orb { position: absolute; width: calc(100% / 12); height: calc(100% / 12); }
+.orb::before {
+  content: ""; position: absolute; inset: 17%; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff3f3 0 7%, #ff8a94 22%, #ff2d44 56%, #a8102a 100%);
+  box-shadow: 0 0 12px 4px rgba(255, 60, 80, 0.6), 0 0 28px 8px rgba(255, 60, 80, 0.3);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .orb::before { animation: pulse 1.7s ease-in-out infinite; }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(0.92); box-shadow: 0 0 10px 3px rgba(255, 60, 80, 0.5), 0 0 22px 6px rgba(255, 60, 80, 0.25); }
+  50% { transform: scale(1.08); box-shadow: 0 0 16px 6px rgba(255, 60, 80, 0.75), 0 0 36px 12px rgba(255, 60, 80, 0.4); }
+}
+
+/* game over / error message: a blurred overlay on the board */
+.board-inner #banner, .board-inner .over {
+  position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center; text-align: center;
+  padding: 20px; font-weight: 700; font-size: 18px; line-height: 1.35; color: #fff; pointer-events: none;
+  background: rgba(8, 12, 24, 0.5); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.board-inner #banner:empty, .board-inner .over:empty { display: none; }
+.hint { margin: 6px 0 0; text-align: center; color: var(--muted); font-size: 13px; }
+
+/* tactile keycap buttons */
+#pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 320px; margin: 14px auto 18px; }
+#pad button {
+  min-height: 64px; font-size: 28px; line-height: 1; color: var(--fg); cursor: pointer; border-radius: 16px;
+  background: linear-gradient(180deg, #3d4a68, #263049); border: 1px solid #5a6890; border-bottom-color: #2a3350;
+  box-shadow: 0 6px 0 #0f1526, 0 12px 18px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
+  transition: transform 0.06s, box-shadow 0.06s;
+}
+#pad button:active {
+  transform: translateY(5px); background: linear-gradient(180deg, #2f3a56, #232c44);
+  box-shadow: 0 1px 0 #0f1526, 0 3px 8px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.45);
+}
+#pad button:focus-visible, button.primary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+#pad .up { grid-column: 2; grid-row: 1; } #pad .left { grid-column: 1; grid-row: 2; } #pad .down { grid-column: 2; grid-row: 2; } #pad .right { grid-column: 3; grid-row: 2; }
+@media (prefers-reduced-motion: reduce) { #pad button { transition: none; } }
+
+/* status card and links */
+.card {
+  margin: 14px 0; padding: 14px 16px; border-radius: 18px; background: var(--glass); border: 1px solid var(--line);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px; margin: 0; font-variant-numeric: tabular-nums; }
+dt { color: var(--muted); }
+dd { margin: 0; overflow-wrap: anywhere; line-height: 1.5; }
+dd[id] { font-family: var(--mono); font-size: 13px; line-height: 1.6; } /* live values in monospace; explanatory prose stays in the normal font */
+#selftest { font: 11px/1.4 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; border: 1px solid var(--line); border-radius: 10px; padding: 8px; margin: 10px 0 0; background: rgba(0, 0, 0, 0.25); }
+button.primary {
+  font: inherit; font-weight: 700; padding: 9px 18px; cursor: pointer; color: #06210f; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.35);
+  background: linear-gradient(180deg, #7dffb4, #2fd47a); box-shadow: 0 4px 0 #0f6b3a, 0 8px 14px rgba(0, 0, 0, 0.4);
+}
+button.primary:active { transform: translateY(3px); box-shadow: 0 1px 0 #0f6b3a, 0 3px 6px rgba(0, 0, 0, 0.4); }
+.links { margin: 12px 0 0; color: var(--muted); font-size: 13px; }
+
+/* compare page */
+body > #banner {
+  padding: 12px 16px; font-weight: 700; text-align: center; color: var(--warn-fg); background: var(--warn-bg);
+  border-bottom: 2px solid var(--warn-fg); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.boards { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; margin-top: 8px; align-items: end; }
+figure { margin: 0; }
+figcaption { font-weight: 700; text-align: center; margin-bottom: 2px; overflow-wrap: anywhere; }
+@media (max-width: 640px) { .boards { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 480px) {
+  h1 { font-size: 26px; }
+  .board-panel { padding: 9px; border-radius: 20px; }
+  dl { grid-template-columns: minmax(0, 1fr); gap: 0; } /* label above value on phones, so long values get the full width */
+  dt { margin-top: 8px; font-size: 13px; }
+}

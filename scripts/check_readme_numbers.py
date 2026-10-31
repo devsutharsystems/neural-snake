@@ -176,7 +176,7 @@ def check(readme, src=None):
             problems.append(f"docs/browser_checks.md lacks '{s}'")
         if s not in readme:
             problems.append(f"browser fact: README lacks '{s}'")
-    for js in ("main.js", "controls.js", "selftest.js"):  # every function of the game page's JS, including the shared input and self-test modules, must be listed
+    for js in ("main.js", "controls.js", "selftest.js", "render.js"):  # every function of the game page's JS, including the shared input and self-test modules, must be listed
         funcs, _ = audit_web.inventory(os.path.join(ROOT, "web", js))
         for name, _ in funcs:
             if f"{name}()" not in readme:

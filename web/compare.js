@@ -3,11 +3,11 @@
 import { Engine, RIGHT, NOOP } from './engine.js';
 import { installControls } from './controls.js'; // on-screen buttons and swipe: they only call setPending(action), exactly like an arrow key
 import { chooseBackend, formatReports, errorText } from './selftest.js'; // runtime self-test: golden cases = the model's own recorded outputs, no game rules
+import { fitCanvas, drawBoard, placeOrbs } from './render.js'; // drawing only: paints one frame from the cell classes it is given
 
 const N = 12;
 const TICK_MS = 150;
 const KEY_TO_ACTION = { ArrowUp: 0, ArrowDown: 1, ArrowLeft: 2, ArrowRight: 3 };
-const COLORS = ['#f5f5f5', '#e53935', ...Array(4).fill('#1b5e20'), ...Array(4).fill('#43a047'), ...Array(4).fill('#a5d6a7')];
 const VERBOSE = new URLSearchParams(location.search).get('verbose') === '1';
 const BASE = new URL('./', import.meta.url);
 const VENDOR = new URL('vendor/', BASE).href;
@@ -18,6 +18,8 @@ const SELFTEST_PANEL = new URLSearchParams(location.search).get('selftest') === 
 
 // purpose: shorthand for document.getElementById.
 const el = (id) => document.getElementById(id);
+fitCanvas(el('model')); // canvas backing store: 480 px, or 960 px on high-density screens
+fitCanvas(el('engine'));
 const state = { ort: null, session: null, backend: '', reports: [], start: null, modelGrid: null, engine: null, modelOver: false, busy: false, pendingAction: NOOP,
   steps: 0, firstDivergence: null, mismatched: 0, stopped: false };
 
@@ -62,15 +64,10 @@ function renderSelfTestPanel() {
   el('selftest').textContent = formatReports(state.reports, 'Self-test ' + new Date().toISOString() + '\nuserAgent: ' + navigator.userAgent);
 }
 
-// purpose: paint a 14-class grid on a canvas; cells listed in `diff` get a red outline.
-function drawGrid(canvas, grid, diff) {
-  const ctx = canvas.getContext('2d'), s = canvas.width / N;
-  for (let i = 0; i < N * N; i++) {
-    const x = (i % N) * s, y = Math.floor(i / N) * s;
-    ctx.fillStyle = COLORS[grid[i]] || '#ff00ff';
-    ctx.fillRect(x, y, s - 1, s - 1);
-    if (diff && diff[i]) { ctx.strokeStyle = '#d50000'; ctx.lineWidth = 3; ctx.strokeRect(x + 2, y + 2, s - 5, s - 5); }
-  }
+// purpose: paint one 14-class grid on a board with the shared renderer (tiles, snake from its direction classes, food orbs); cells listed in `diff` get a red outline.
+function drawGrid(canvas, orbs, grid, diff) {
+  drawBoard(canvas.getContext('2d'), grid, canvas.width, diff);
+  placeOrbs(orbs, grid);
 }
 
 // purpose: one model call on (grid, action); returns the model's argmax grid and its game-over decision. Does no food sampling on this page.
@@ -92,8 +89,10 @@ function compareGrids(a, b) {
 
 // purpose: draw both boards and update the step counter, first divergence, mismatch count and game-over text.
 function render(diff, summary) {
-  drawGrid(el('model'), state.modelGrid, diff);
-  drawGrid(el('engine'), state.engine.grid14(), null);
+  drawGrid(el('model'), el('orbsModel'), state.modelGrid, diff);
+  drawGrid(el('engine'), el('orbsEngine'), state.engine.grid14(), null);
+  el('overModel').textContent = state.modelOver ? 'Game over (the model says so)' : '';
+  el('overEngine').textContent = state.engine.gameOver ? 'Game over (the engine says so)' : '';
   el('backend').textContent = state.backend || 'loading...';
   el('steps').textContent = String(state.steps);
   el('first').textContent = state.firstDivergence === null ? 'none yet' : 'step ' + state.firstDivergence;
