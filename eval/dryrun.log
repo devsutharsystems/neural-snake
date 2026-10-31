@@ -1,0 +1,2 @@
+[dryrun run1] rows=135292 exact(all)=0.99987 seconds=82.7
+[dryrun spike_a] rows=10374 exact(all)=0.99981 seconds=43.5

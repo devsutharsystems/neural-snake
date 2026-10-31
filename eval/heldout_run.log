@@ -1,0 +1,19 @@
+held-out evaluation done; wrote eval/results_heldout.json and .md
+       78.08 real       282.34 user         3.14 sys
+           437223424  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               46391  page reclaims
+               19154  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1030  voluntary context switches
+              175369  involuntary context switches
+       3361468507080  instructions retired
+        725735136149  cycles elapsed
+           465617904  peak memory footprint

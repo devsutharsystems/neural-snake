@@ -1,0 +1,13 @@
+{
+ "started": "2026-10-31T06:10:30Z",
+ "provenance": {
+  "sha256": {
+   "web/model/snake.onnx": "baf94b18913641846a448ced2c298c9ce707869d24aed1eefbb4b4bf474fd740",
+   "checkpoints/run2_best.pt": "6219b45ed830c70f686d1cdb484ac3d6a02dee2f830ff01d68eff604a3b87f79",
+   "scripts/eval_heldout.py": "3b10e81e5204d6b415bf98a267542573e6f2e6ebe71f1b7fc0ada282280b2ace"
+  },
+  "onnxruntime_py": "1.31.1",
+  "git_head": "cf6d67958a2a009109d487a6fee345b11a7f1980",
+  "utc": "2026-10-31T06:10:30Z"
+ }
+}

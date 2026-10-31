@@ -1,0 +1,972 @@
+{
+ "provenance": {
+  "sha256": {
+   "web/model/snake.onnx": "baf94b18913641846a448ced2c298c9ce707869d24aed1eefbb4b4bf474fd740",
+   "checkpoints/run2_best.pt": "6219b45ed830c70f686d1cdb484ac3d6a02dee2f830ff01d68eff604a3b87f79",
+   "scripts/eval_heldout.py": "3b10e81e5204d6b415bf98a267542573e6f2e6ebe71f1b7fc0ada282280b2ace"
+  },
+  "onnxruntime_py": "1.31.1",
+  "git_head": "cf6d67958a2a009109d487a6fee345b11a7f1980",
+  "utc": "2026-10-31T06:10:30Z"
+ },
+ "rollout_cap": 1000,
+ "note": "held-out evaluated once; no changes to model, script or metrics after this run",
+ "headline_run1_heldout": {
+  "dataset": "run1",
+  "split": "heldout",
+  "rows": 133848,
+  "episodes": 1901,
+  "one_step": {
+   "rows": 133848,
+   "exact": {
+    "1-3": {
+     "all_steps": {
+      "n": 54530,
+      "model_exact": 0.99996,
+      "model_exact_and_over_flag": 0.99996,
+      "copy14": 0.01298,
+      "copy4": 0.01931
+     },
+     "eat_steps": {
+      "n": 2960,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 51570,
+      "model_exact": 0.99996,
+      "model_exact_and_over_flag": 0.99996,
+      "copy14": 0.01373,
+      "copy4": 0.02042
+     }
+    },
+    "4-7": {
+     "all_steps": {
+      "n": 25918,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.00625,
+      "copy4": 0.01331
+     },
+     "eat_steps": {
+      "n": 2506,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 23412,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.00692,
+      "copy4": 0.01474
+     }
+    },
+    "8-15": {
+     "all_steps": {
+      "n": 23930,
+      "model_exact": 0.99954,
+      "model_exact_and_over_flag": 0.99954,
+      "copy14": 0.00598,
+      "copy4": 0.01178
+     },
+     "eat_steps": {
+      "n": 2438,
+      "model_exact": 0.99959,
+      "model_exact_and_over_flag": 0.99959,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 21492,
+      "model_exact": 0.99953,
+      "model_exact_and_over_flag": 0.99953,
+      "copy14": 0.00665,
+      "copy4": 0.01312
+     }
+    },
+    "16+": {
+     "all_steps": {
+      "n": 29470,
+      "model_exact": 0.99983,
+      "model_exact_and_over_flag": 0.99983,
+      "copy14": 0.00685,
+      "copy4": 0.00733
+     },
+     "eat_steps": {
+      "n": 2795,
+      "model_exact": 0.99964,
+      "model_exact_and_over_flag": 0.99964,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 26675,
+      "model_exact": 0.99985,
+      "model_exact_and_over_flag": 0.99985,
+      "copy14": 0.00757,
+      "copy4": 0.0081
+     }
+    },
+    "16-31": {
+     "all_steps": {
+      "n": 22536,
+      "model_exact": 0.99982,
+      "model_exact_and_over_flag": 0.99982,
+      "copy14": 0.0059,
+      "copy4": 0.00648
+     },
+     "eat_steps": {
+      "n": 2205,
+      "model_exact": 0.99955,
+      "model_exact_and_over_flag": 0.99955,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 20331,
+      "model_exact": 0.99985,
+      "model_exact_and_over_flag": 0.99985,
+      "copy14": 0.00654,
+      "copy4": 0.00718
+     }
+    },
+    "32-63": {
+     "all_steps": {
+      "n": 6934,
+      "model_exact": 0.99986,
+      "model_exact_and_over_flag": 0.99986,
+      "copy14": 0.00995,
+      "copy4": 0.0101
+     },
+     "eat_steps": {
+      "n": 590,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 6344,
+      "model_exact": 0.99984,
+      "model_exact_and_over_flag": 0.99984,
+      "copy14": 0.01088,
+      "copy4": 0.01103
+     }
+    },
+    "64+": {
+     "all_steps": {
+      "n": 0,
+      "model_exact": null,
+      "model_exact_and_over_flag": null,
+      "copy14": null,
+      "copy4": null
+     },
+     "eat_steps": {
+      "n": 0,
+      "model_exact": null,
+      "model_exact_and_over_flag": null,
+      "copy14": null,
+      "copy4": null
+     },
+     "non_eat_steps": {
+      "n": 0,
+      "model_exact": null,
+      "model_exact_and_over_flag": null,
+      "copy14": null,
+      "copy4": null
+     }
+    },
+    "all": {
+     "all_steps": {
+      "n": 133848,
+      "model_exact": 0.99987,
+      "model_exact_and_over_flag": 0.99987,
+      "copy14": 0.00908,
+      "copy4": 0.01417
+     },
+     "eat_steps": {
+      "n": 10699,
+      "model_exact": 0.99981,
+      "model_exact_and_over_flag": 0.99981,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 123149,
+      "model_exact": 0.99987,
+      "model_exact_and_over_flag": 0.99987,
+      "copy14": 0.00987,
+      "copy4": 0.0154
+     }
+    }
+   },
+   "per_class_error": {
+    "empty": {
+     "cells": 17887414,
+     "pct_wrong_14class": 0.0,
+     "pct_wrong_type_only": 0.0,
+     "pct_wrong_14class_eat_steps": 0.0,
+     "pct_wrong_14class_non_eat_steps": 0.0
+    },
+    "food": {
+     "cells": 123149,
+     "pct_wrong_14class": 0.0032,
+     "pct_wrong_type_only": 0.0032,
+     "pct_wrong_14class_eat_steps": null,
+     "pct_wrong_14class_non_eat_steps": 0.0032
+    },
+    "head": {
+     "cells": 133848,
+     "pct_wrong_14class": 0.0015,
+     "pct_wrong_type_only": 0.0015,
+     "pct_wrong_14class_eat_steps": 0.0,
+     "pct_wrong_14class_non_eat_steps": 0.0016
+    },
+    "body": {
+     "cells": 1029080,
+     "pct_wrong_14class": 0.0012,
+     "pct_wrong_type_only": 0.0001,
+     "pct_wrong_14class_eat_steps": 0.0009,
+     "pct_wrong_14class_non_eat_steps": 0.0012
+    },
+    "tail": {
+     "cells": 100621,
+     "pct_wrong_14class": 0.007,
+     "pct_wrong_type_only": 0.005,
+     "pct_wrong_14class_eat_steps": 0.0093,
+     "pct_wrong_14class_non_eat_steps": 0.0067
+    }
+   },
+   "game_over": {
+    "n_true": 1896,
+    "predicted": 1892,
+    "precision": 1.0,
+    "recall": 0.99789
+   },
+   "ate_head": {
+    "accuracy": 1.0,
+    "n_eat": 10699,
+    "precision": 1.0,
+    "recall": 1.0,
+    "accuracy_if_always_no": 0.92007
+   },
+   "food_head": {
+    "eat_rows_with_spawn": 10699,
+    "head_cross_entropy": 4.8909,
+    "uniform_floor_mean_ln_empty": 4.8803,
+    "ce_minus_floor": 0.0107,
+    "mean_prob_mass_on_snake_cells": 0.00589,
+    "spawn_valid_pct_sampled_on_empty_cell": 99.421,
+    "spawn_on_snake_pct": 0.579
+   },
+   "implied_median_from_one_step_p": {
+    "overall_exact": {
+     "p": 0.99987,
+     "median_steps": 5331.55
+    },
+    "non_eat_exact": {
+     "p": 0.99987,
+     "median_steps": 5331.55
+    },
+    "bucket_balanced_exact": {
+     "p": 0.99983,
+     "median_steps": 4137.85
+    }
+   }
+  },
+  "rollout_cap": 1000,
+  "rollout_bfs": {
+   "n": 100,
+   "cap": 1000,
+   "headline": {
+    "mismatched": 4,
+    "matched_to_end": 96,
+    "alive_at_cap_no_mismatch": 0,
+    "kaplan_meier_P_no_mismatch_yet": {
+     "S": {
+      "50": 0.9791,
+      "100": 0.9791,
+      "200": 0.9791,
+      "500": 0.9175,
+      "1000": 0.9175
+     },
+     "rollouts_still_observed_at_step": {
+      "50": 92,
+      "100": 85,
+      "200": 65,
+      "500": 0,
+      "1000": 0
+     },
+     "median": "not reached"
+    },
+    "km_note": "a rollout that ends in game over without a mismatch, or reaches the cap, is censored at that step"
+   },
+   "conventions_not_headline": {
+    "note": "median conventions kept for reference only; neither is a headline",
+    "first_mismatch_median_censored_at_end_step": 241.0,
+    "first_mismatch_p10_censored_at_end_step": 59.400000000000006,
+    "first_mismatch_median_nomismatch_as_cap_plus_1": 1001.0,
+    "first_mismatch_p10_nomismatch_as_cap_plus_1": 1001.0,
+    "first_invalid_median_censored_at_end_step": 241.0,
+    "first_invalid_p10_censored_at_end_step": 59.400000000000006,
+    "implied_median_from_rollout_hazard": 4220.92
+   },
+   "dynamics_invalid": {
+    "rollouts_with_invalid_state": 3,
+    "reasons": {
+     "heads!=1": 2,
+     "wrong_length": 1,
+     "disconnected": 0
+    },
+    "note": "heads != 1, wrong length, disconnected body; food_on_snake is NOT included here"
+   },
+   "food_on_snake": {
+    "eat_events": 2559,
+    "events": 23,
+    "pct_of_eat_events": 0.899,
+    "rollouts_with_event": 23,
+    "note": "sampled from the model's food head and checked against the model's own predicted grid, as the page would write it"
+   },
+   "longest_snake_engine": 56,
+   "longest_snake_model_predicted": 56,
+   "rollouts_engine_length_ge_64": 0,
+   "length_at_first_mismatch": {
+    "median": 30.5,
+    "max": 47
+   },
+   "per_step_accuracy_from_rollouts": 0.99984
+  },
+  "rollout_random_safe": {
+   "n": 100,
+   "cap": 1000,
+   "headline": {
+    "mismatched": 15,
+    "matched_to_end": 74,
+    "alive_at_cap_no_mismatch": 11,
+    "kaplan_meier_P_no_mismatch_yet": {
+     "S": {
+      "50": 0.9508,
+      "100": 0.9048,
+      "200": 0.8432,
+      "500": 0.7955,
+      "1000": 0.6641
+     },
+     "rollouts_still_observed_at_step": {
+      "50": 66,
+      "100": 52,
+      "200": 38,
+      "500": 27,
+      "1000": 11
+     },
+     "median": "not reached"
+    },
+    "km_note": "a rollout that ends in game over without a mismatch, or reaches the cap, is censored at that step"
+   },
+   "conventions_not_headline": {
+    "note": "median conventions kept for reference only; neither is a headline",
+    "first_mismatch_median_censored_at_end_step": 107.5,
+    "first_mismatch_p10_censored_at_end_step": 11.9,
+    "first_mismatch_median_nomismatch_as_cap_plus_1": 1001.0,
+    "first_mismatch_p10_nomismatch_as_cap_plus_1": 203.1,
+    "first_invalid_median_censored_at_end_step": 111.5,
+    "first_invalid_p10_censored_at_end_step": 11.9,
+    "implied_median_from_rollout_hazard": 1371.11
+   },
+   "dynamics_invalid": {
+    "rollouts_with_invalid_state": 10,
+    "reasons": {
+     "heads!=1": 5,
+     "wrong_length": 5,
+     "disconnected": 0
+    },
+    "note": "heads != 1, wrong length, disconnected body; food_on_snake is NOT included here"
+   },
+   "food_on_snake": {
+    "eat_events": 182,
+    "events": 0,
+    "pct_of_eat_events": 0.0,
+    "rollouts_with_event": 0,
+    "note": "sampled from the model's food head and checked against the model's own predicted grid, as the page would write it"
+   },
+   "longest_snake_engine": 57,
+   "longest_snake_model_predicted": 57,
+   "rollouts_engine_length_ge_64": 0,
+   "length_at_first_mismatch": {
+    "median": 7.0,
+    "max": 38
+   },
+   "per_step_accuracy_from_rollouts": 0.99949
+  },
+  "rollout_all_200": {
+   "n": 200,
+   "cap": 1000,
+   "headline": {
+    "mismatched": 19,
+    "matched_to_end": 170,
+    "alive_at_cap_no_mismatch": 11,
+    "kaplan_meier_P_no_mismatch_yet": {
+     "S": {
+      "50": 0.9659,
+      "100": 0.9467,
+      "200": 0.9222,
+      "500": 0.8714,
+      "1000": 0.7274
+     },
+     "rollouts_still_observed_at_step": {
+      "50": 158,
+      "100": 137,
+      "200": 103,
+      "500": 27,
+      "1000": 11
+     },
+     "median": "not reached"
+    },
+    "km_note": "a rollout that ends in game over without a mismatch, or reaches the cap, is censored at that step"
+   },
+   "conventions_not_headline": {
+    "note": "median conventions kept for reference only; neither is a headline",
+    "first_mismatch_median_censored_at_end_step": 202.5,
+    "first_mismatch_p10_censored_at_end_step": 22.900000000000002,
+    "first_mismatch_median_nomismatch_as_cap_plus_1": 1001.0,
+    "first_mismatch_p10_nomismatch_as_cap_plus_1": 1001.0,
+    "first_invalid_median_censored_at_end_step": 202.5,
+    "first_invalid_p10_censored_at_end_step": 22.900000000000002,
+    "implied_median_from_rollout_hazard": 1971.07
+   },
+   "dynamics_invalid": {
+    "rollouts_with_invalid_state": 13,
+    "reasons": {
+     "heads!=1": 7,
+     "wrong_length": 6,
+     "disconnected": 0
+    },
+    "note": "heads != 1, wrong length, disconnected body; food_on_snake is NOT included here"
+   },
+   "food_on_snake": {
+    "eat_events": 2741,
+    "events": 23,
+    "pct_of_eat_events": 0.839,
+    "rollouts_with_event": 23,
+    "note": "sampled from the model's food head and checked against the model's own predicted grid, as the page would write it"
+   },
+   "longest_snake_engine": 57,
+   "longest_snake_model_predicted": 57,
+   "rollouts_engine_length_ge_64": 0,
+   "length_at_first_mismatch": {
+    "median": 11.0,
+    "max": 47
+   },
+   "per_step_accuracy_from_rollouts": 0.99965
+  },
+  "failure_grids": [
+   {
+    "kind": "bfs",
+    "rollout": 11,
+    "step": 322,
+    "action": 0,
+    "engine_length": 47,
+    "text": "engine (head ^v<>, body arrows, tail T)   model\n............   ............\n...........F   ...........F\n..........\u2193\u2190   ..........\u2193\u2191\n..........\u2193\u2191   ..........\u2193\u2191\n..........\u2193\u2191   ..........\u2193\u2191\n..........\u2193\u2191   ..........\u2193\u2191\n..\u2193\u2190..\u2193\u2190\u2190\u2190\u2190\u2191   ..\u2193\u2190..\u2193\u2190\u2190\u2190\u2190\u2191\n..\u2193\u2191..\u2192\u2192\u2192\u2193.\u2191   ..\u2193\u2191..\u2192\u2192\u2192\u2193.\u2191\n..\u2193\u2191\u2190...\u2193\u2190.\u2191   ..\u2193\u2191\u2190...\u2193\u2190.\u2191\n..\u2193.\u2191\u2190\u2190\u2190\u2190..\u2191   ..\u2193.\u2191\u2190\u2190\u2190\u2190..\u2191\n.^\u2193..T\u2192\u2192\u2192\u2192\u2192\u2191   .^\u2193..T\u2192\u2192\u2192\u2192\u2192\u2191\n.\u2191\u2190.........   .\u2191\u2190........."
+   },
+   {
+    "kind": "random",
+    "rollout": 0,
+    "step": 782,
+    "action": 2,
+    "engine_length": 5,
+    "text": "engine (head ^v<>, body arrows, tail T)   model\n..........\u2192>   ..........\u2192>\n..........\u2191\u2190   ..........\u2191T\n...........T   ...........T\n............   ............\n............   ............\n............   ............\n............   ............\n............   ............\n............   ............\n............   ............\n............   ............\n.....F......   .....F......"
+   },
+   {
+    "kind": "bfs",
+    "rollout": 19,
+    "step": 32,
+    "action": 2,
+    "engine_length": 21,
+    "text": "engine (head ^v<>, body arrows, tail T)   model\n............   ............\n............   ............\n............   ............\n............   ............\n............   ............\n............   ............\n..........\u2193\u2190   ..........\u2193\u2190\n..........\u2193\u2191   ..........\u2193\u2191\n......\u2193\u2190\u2190\u2190\u2190\u2191   ......\u2193\u2190\u2190\u2190\u2190\u2191\n.....\u2193\u2190....\u2191   .....\u2193\u2190....\u2191\n...F<\u2190T\u2192\u2192\u2192\u2192\u2191   ...F<\u2190\u2192\u2192\u2192\u2192\u2192\u2191\n............   ............"
+   }
+  ],
+  "seconds": 51.0
+ },
+ "spike_a_heldout_seen_once_in_phase0_by_throwaway_models": {
+  "dataset": "spike_a",
+  "split": "heldout",
+  "rows": 9569,
+  "episodes": 141,
+  "one_step": {
+   "rows": 9569,
+   "exact": {
+    "1-3": {
+     "all_steps": {
+      "n": 3693,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.01571,
+      "copy4": 0.02275
+     },
+     "eat_steps": {
+      "n": 209,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 3484,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.01665,
+      "copy4": 0.02411
+     }
+    },
+    "4-7": {
+     "all_steps": {
+      "n": 1749,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.00572,
+      "copy4": 0.01029
+     },
+     "eat_steps": {
+      "n": 181,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 1568,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.00638,
+      "copy4": 0.01148
+     }
+    },
+    "8-15": {
+     "all_steps": {
+      "n": 2181,
+      "model_exact": 0.99908,
+      "model_exact_and_over_flag": 0.99908,
+      "copy14": 0.0055,
+      "copy4": 0.01009
+     },
+     "eat_steps": {
+      "n": 225,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 1956,
+      "model_exact": 0.99898,
+      "model_exact_and_over_flag": 0.99898,
+      "copy14": 0.00613,
+      "copy4": 0.01125
+     }
+    },
+    "16+": {
+     "all_steps": {
+      "n": 1946,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.00771,
+      "copy4": 0.00874
+     },
+     "eat_steps": {
+      "n": 186,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 1760,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.00852,
+      "copy4": 0.00966
+     }
+    },
+    "16-31": {
+     "all_steps": {
+      "n": 1614,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.00558,
+      "copy4": 0.00682
+     },
+     "eat_steps": {
+      "n": 157,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 1457,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.00618,
+      "copy4": 0.00755
+     }
+    },
+    "32-63": {
+     "all_steps": {
+      "n": 332,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.01807,
+      "copy4": 0.01807
+     },
+     "eat_steps": {
+      "n": 29,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 303,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.0198,
+      "copy4": 0.0198
+     }
+    },
+    "64+": {
+     "all_steps": {
+      "n": 0,
+      "model_exact": null,
+      "model_exact_and_over_flag": null,
+      "copy14": null,
+      "copy4": null
+     },
+     "eat_steps": {
+      "n": 0,
+      "model_exact": null,
+      "model_exact_and_over_flag": null,
+      "copy14": null,
+      "copy4": null
+     },
+     "non_eat_steps": {
+      "n": 0,
+      "model_exact": null,
+      "model_exact_and_over_flag": null,
+      "copy14": null,
+      "copy4": null
+     }
+    },
+    "all": {
+     "all_steps": {
+      "n": 9569,
+      "model_exact": 0.99979,
+      "model_exact_and_over_flag": 0.99979,
+      "copy14": 0.00993,
+      "copy4": 0.01474
+     },
+     "eat_steps": {
+      "n": 801,
+      "model_exact": 1.0,
+      "model_exact_and_over_flag": 1.0,
+      "copy14": 0.0,
+      "copy4": 0.0
+     },
+     "non_eat_steps": {
+      "n": 8768,
+      "model_exact": 0.99977,
+      "model_exact_and_over_flag": 0.99977,
+      "copy14": 0.01083,
+      "copy4": 0.01608
+     }
+    }
+   },
+   "per_class_error": {
+    "empty": {
+     "cells": 1281890,
+     "pct_wrong_14class": 0.0,
+     "pct_wrong_type_only": 0.0,
+     "pct_wrong_14class_eat_steps": 0.0,
+     "pct_wrong_14class_non_eat_steps": 0.0
+    },
+    "food": {
+     "cells": 8768,
+     "pct_wrong_14class": 0.0114,
+     "pct_wrong_type_only": 0.0114,
+     "pct_wrong_14class_eat_steps": null,
+     "pct_wrong_14class_non_eat_steps": 0.0114
+    },
+    "head": {
+     "cells": 9569,
+     "pct_wrong_14class": 0.0,
+     "pct_wrong_type_only": 0.0,
+     "pct_wrong_14class_eat_steps": 0.0,
+     "pct_wrong_14class_non_eat_steps": 0.0
+    },
+    "body": {
+     "cells": 70304,
+     "pct_wrong_14class": 0.0014,
+     "pct_wrong_type_only": 0.0,
+     "pct_wrong_14class_eat_steps": 0.0,
+     "pct_wrong_14class_non_eat_steps": 0.0016
+    },
+    "tail": {
+     "cells": 7405,
+     "pct_wrong_14class": 0.0,
+     "pct_wrong_type_only": 0.0,
+     "pct_wrong_14class_eat_steps": 0.0,
+     "pct_wrong_14class_non_eat_steps": 0.0
+    }
+   },
+   "game_over": {
+    "n_true": 141,
+    "predicted": 141,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "ate_head": {
+    "accuracy": 1.0,
+    "n_eat": 801,
+    "precision": 1.0,
+    "recall": 1.0,
+    "accuracy_if_always_no": 0.91629
+   },
+   "food_head": {
+    "eat_rows_with_spawn": 801,
+    "head_cross_entropy": 4.8936,
+    "uniform_floor_mean_ln_empty": 4.8851,
+    "ce_minus_floor": 0.0085,
+    "mean_prob_mass_on_snake_cells": 0.00555,
+    "spawn_valid_pct_sampled_on_empty_cell": 99.501,
+    "spawn_on_snake_pct": 0.499
+   },
+   "implied_median_from_one_step_p": {
+    "overall_exact": {
+     "p": 0.99979,
+     "median_steps": 3300.35
+    },
+    "non_eat_exact": {
+     "p": 0.99977,
+     "median_steps": 3013.34
+    },
+    "bucket_balanced_exact": {
+     "p": 0.99977,
+     "median_steps": 3013.34
+    }
+   }
+  },
+  "rollout_cap": 1000,
+  "rollout_bfs": {
+   "n": 100,
+   "cap": 1000,
+   "headline": {
+    "mismatched": 5,
+    "matched_to_end": 95,
+    "alive_at_cap_no_mismatch": 0,
+    "kaplan_meier_P_no_mismatch_yet": {
+     "S": {
+      "50": 1.0,
+      "100": 1.0,
+      "200": 1.0,
+      "500": 0.6875,
+      "1000": 0.6875
+     },
+     "rollouts_still_observed_at_step": {
+      "50": 96,
+      "100": 91,
+      "200": 64,
+      "500": 0,
+      "1000": 0
+     },
+     "median": "not reached"
+    },
+    "km_note": "a rollout that ends in game over without a mismatch, or reaches the cap, is censored at that step"
+   },
+   "conventions_not_headline": {
+    "note": "median conventions kept for reference only; neither is a headline",
+    "first_mismatch_median_censored_at_end_step": 265.0,
+    "first_mismatch_p10_censored_at_end_step": 112.9,
+    "first_mismatch_median_nomismatch_as_cap_plus_1": 1001.0,
+    "first_mismatch_p10_nomismatch_as_cap_plus_1": 1001.0,
+    "first_invalid_median_censored_at_end_step": 265.0,
+    "first_invalid_p10_censored_at_end_step": 112.9,
+    "implied_median_from_rollout_hazard": 3505.73
+   },
+   "dynamics_invalid": {
+    "rollouts_with_invalid_state": 2,
+    "reasons": {
+     "heads!=1": 2,
+     "wrong_length": 0,
+     "disconnected": 0
+    },
+    "note": "heads != 1, wrong length, disconnected body; food_on_snake is NOT included here"
+   },
+   "food_on_snake": {
+    "eat_events": 2556,
+    "events": 33,
+    "pct_of_eat_events": 1.291,
+    "rollouts_with_event": 26,
+    "note": "sampled from the model's food head and checked against the model's own predicted grid, as the page would write it"
+   },
+   "longest_snake_engine": 57,
+   "longest_snake_model_predicted": 57,
+   "rollouts_engine_length_ge_64": 0,
+   "length_at_first_mismatch": {
+    "median": 38.0,
+    "max": 48
+   },
+   "per_step_accuracy_from_rollouts": 0.9998
+  },
+  "rollout_random_safe": {
+   "n": 100,
+   "cap": 1000,
+   "headline": {
+    "mismatched": 7,
+    "matched_to_end": 76,
+    "alive_at_cap_no_mismatch": 17,
+    "kaplan_meier_P_no_mismatch_yet": {
+     "S": {
+      "50": 0.966,
+      "100": 0.966,
+      "200": 0.9484,
+      "500": 0.878,
+      "1000": 0.878
+     },
+     "rollouts_still_observed_at_step": {
+      "50": 65,
+      "100": 59,
+      "200": 48,
+      "500": 32,
+      "1000": 17
+     },
+     "median": "not reached"
+    },
+    "km_note": "a rollout that ends in game over without a mismatch, or reaches the cap, is censored at that step"
+   },
+   "conventions_not_headline": {
+    "note": "median conventions kept for reference only; neither is a headline",
+    "first_mismatch_median_censored_at_end_step": 192.0,
+    "first_mismatch_p10_censored_at_end_step": 14.0,
+    "first_mismatch_median_nomismatch_as_cap_plus_1": 1001.0,
+    "first_mismatch_p10_nomismatch_as_cap_plus_1": 1001.0,
+    "first_invalid_median_censored_at_end_step": 192.0,
+    "first_invalid_p10_censored_at_end_step": 14.0,
+    "implied_median_from_rollout_hazard": 3547.58
+   },
+   "dynamics_invalid": {
+    "rollouts_with_invalid_state": 2,
+    "reasons": {
+     "heads!=1": 2,
+     "wrong_length": 0,
+     "disconnected": 0
+    },
+    "note": "heads != 1, wrong length, disconnected body; food_on_snake is NOT included here"
+   },
+   "food_on_snake": {
+    "eat_events": 185,
+    "events": 0,
+    "pct_of_eat_events": 0.0,
+    "rollouts_with_event": 0,
+    "note": "sampled from the model's food head and checked against the model's own predicted grid, as the page would write it"
+   },
+   "longest_snake_engine": 40,
+   "longest_snake_model_predicted": 40,
+   "rollouts_engine_length_ge_64": 0,
+   "length_at_first_mismatch": {
+    "median": 10.0,
+    "max": 20
+   },
+   "per_step_accuracy_from_rollouts": 0.9998
+  },
+  "rollout_all_200": {
+   "n": 200,
+   "cap": 1000,
+   "headline": {
+    "mismatched": 12,
+    "matched_to_end": 171,
+    "alive_at_cap_no_mismatch": 17,
+    "kaplan_meier_P_no_mismatch_yet": {
+     "S": {
+      "50": 0.9838,
+      "100": 0.9838,
+      "200": 0.977,
+      "500": 0.8568,
+      "1000": 0.8568
+     },
+     "rollouts_still_observed_at_step": {
+      "50": 161,
+      "100": 150,
+      "200": 112,
+      "500": 32,
+      "1000": 17
+     },
+     "median": "not reached"
+    },
+    "km_note": "a rollout that ends in game over without a mismatch, or reaches the cap, is censored at that step"
+   },
+   "conventions_not_headline": {
+    "note": "median conventions kept for reference only; neither is a headline",
+    "first_mismatch_median_censored_at_end_step": 247.5,
+    "first_mismatch_p10_censored_at_end_step": 20.900000000000002,
+    "first_mismatch_median_nomismatch_as_cap_plus_1": 1001.0,
+    "first_mismatch_p10_nomismatch_as_cap_plus_1": 1001.0,
+    "first_invalid_median_censored_at_end_step": 247.5,
+    "first_invalid_p10_censored_at_end_step": 20.900000000000002,
+    "implied_median_from_rollout_hazard": 3530.14
+   },
+   "dynamics_invalid": {
+    "rollouts_with_invalid_state": 4,
+    "reasons": {
+     "heads!=1": 4,
+     "wrong_length": 0,
+     "disconnected": 0
+    },
+    "note": "heads != 1, wrong length, disconnected body; food_on_snake is NOT included here"
+   },
+   "food_on_snake": {
+    "eat_events": 2741,
+    "events": 33,
+    "pct_of_eat_events": 1.204,
+    "rollouts_with_event": 26,
+    "note": "sampled from the model's food head and checked against the model's own predicted grid, as the page would write it"
+   },
+   "longest_snake_engine": 57,
+   "longest_snake_model_predicted": 57,
+   "rollouts_engine_length_ge_64": 0,
+   "length_at_first_mismatch": {
+    "median": 16.0,
+    "max": 48
+   },
+   "per_step_accuracy_from_rollouts": 0.9998
+  },
+  "failure_grids": [
+   {
+    "kind": "bfs",
+    "rollout": 8,
+    "step": 399,
+    "action": 0,
+    "engine_length": 47,
+    "text": "engine (head ^v<>, body arrows, tail T)   model\n\u2193\u2190\u2190\u2190\u2190\u2190\u2190\u2190....   \u2193\u2190\u2190\u2190\u2190\u2190\u2190\u2190....\n\u2193......\u2191....   \u2193......\u2191....\n\u2193....FT\u2191....   \u2193....FT\u2191....\n\u2193....\u2192\u2193.....   \u2193....\u2191\u2193.....\n\u2193....\u2191\u2193...^.   \u2193....\u2191\u2193...^.\n\u2193....\u2191\u2192\u2192\u2192\u2192\u2191.   \u2193....\u2191\u2192\u2192\u2192\u2192\u2191.\n\u2193....\u2191......   \u2193....\u2191......\n\u2193....\u2191......   \u2193....\u2191......\n\u2193....\u2191......   \u2193....\u2191......\n\u2192\u2192\u2192\u2193.\u2191\u2190\u2190\u2190...   \u2192\u2192\u2192\u2193.\u2191\u2190\u2190\u2190...\n...\u2192\u2192\u2192\u2192\u2192\u2191...   ...\u2192\u2192\u2192\u2192\u2192\u2191...\n............   ............"
+   },
+   {
+    "kind": "random",
+    "rollout": 5,
+    "step": 124,
+    "action": 1,
+    "engine_length": 4,
+    "text": "engine (head ^v<>, body arrows, tail T)   model\n..........\u2192\u2193   ..........\u2192\u2193\n..........Tv   ..........\u2191T\n............   ............\n............   ............\n............   ............\n............   ............\n............   ............\n............   ............\n............   ............\n............   ............\n............   ............\n...........F   ...........F"
+   },
+   {
+    "kind": "bfs",
+    "rollout": 89,
+    "step": 435,
+    "action": 4,
+    "engine_length": 48,
+    "text": "engine (head ^v<>, body arrows, tail T)   model\n.....\u2193\u2190\u2190\u2190...   .....\u2193\u2190\u2190\u2190...\n.....\u2193\u2192\u2192\u2191...   .....\u2193\u2192\u2192\u2191...\n.....\u2193\u2191\u2190\u2190\u2190\u2190.   .....\u2193\u2191\u2190\u2190\u2190\u2190.\n.....\u2193....\u2191.   .....\u2193....\u2191.\n..\u2193\u2190\u2190\u2190....\u2191.   ..\u2193\u2190\u2190\u2190....\u2191.\n..\u2193\u2193\u2190.....\u2191.   ..\u2193\u2193\u2190.....\u2191.\n..\u2193\u2193T.....\u2191.   ..\u2193\u2193T.....\u2191.\n\u2193\u2190\u2190\u2192\u2192\u2192\u2193.F.\u2191.   \u2193\u2190\u2190\u2192\u2192\u2192\u2193.F.\u2191.\n\u2193<\u2190...\u2192\u2192\u2192\u2192\u2191.   \u2193<\u2191...\u2192\u2192\u2192\u2192\u2191.\n\u2192\u2192\u2191.........   \u2192\u2192\u2191.........\n............   ............\n............   ............"
+   }
+  ],
+  "seconds": 26.7
+ }
+}

@@ -1,0 +1,490 @@
+{
+ "mode": "dryrun (VALIDATION rows only)",
+ "provenance": {
+  "sha256": {
+   "web/model/snake.onnx": "baf94b18913641846a448ced2c298c9ce707869d24aed1eefbb4b4bf474fd740",
+   "checkpoints/run2_best.pt": "6219b45ed830c70f686d1cdb484ac3d6a02dee2f830ff01d68eff604a3b87f79",
+   "scripts/eval_heldout.py": "3b10e81e5204d6b415bf98a267542573e6f2e6ebe71f1b7fc0ada282280b2ace"
+  },
+  "onnxruntime_py": "1.31.1",
+  "git_head": "cf6d67958a2a009109d487a6fee345b11a7f1980",
+  "utc": "2026-10-31T06:06:50Z"
+ },
+ "dataset": "spike_a",
+ "split": "validation",
+ "rows": 10374,
+ "episodes": 141,
+ "one_step": {
+  "rows": 10374,
+  "exact": {
+   "1-3": {
+    "all_steps": {
+     "n": 3964,
+     "model_exact": 1.0,
+     "model_exact_and_over_flag": 1.0,
+     "copy14": 0.01312,
+     "copy4": 0.01968
+    },
+    "eat_steps": {
+     "n": 218,
+     "model_exact": 1.0,
+     "model_exact_and_over_flag": 1.0,
+     "copy14": 0.0,
+     "copy4": 0.0
+    },
+    "non_eat_steps": {
+     "n": 3746,
+     "model_exact": 1.0,
+     "model_exact_and_over_flag": 1.0,
+     "copy14": 0.01388,
+     "copy4": 0.02082
+    }
+   },
+   "4-7": {
+    "all_steps": {
+     "n": 1928,
+     "model_exact": 0.99948,
+     "model_exact_and_over_flag": 0.99948,
+     "copy14": 0.00519,
+     "copy4": 0.01193
+    },
+    "eat_steps": {
+     "n": 192,
+     "model_exact": 0.99479,
+     "model_exact_and_over_flag": 0.99479,
+     "copy14": 0.0,
+     "copy4": 0.0
+    },
+    "non_eat_steps": {
+     "n": 1736,
+     "model_exact": 1.0,
+     "model_exact_and_over_flag": 1.0,
+     "copy14": 0.00576,
+     "copy4": 0.01325
+    }
+   },
+   "8-15": {
+    "all_steps": {
+     "n": 1799,
+     "model_exact": 1.0,
+     "model_exact_and_over_flag": 1.0,
+     "copy14": 0.00723,
+     "copy4": 0.01223
+    },
+    "eat_steps": {
+     "n": 189,
+     "model_exact": 1.0,
+     "model_exact_and_over_flag": 1.0,
+     "copy14": 0.0,
+     "copy4": 0.0
+    },
+    "non_eat_steps": {
+     "n": 1610,
+     "model_exact": 1.0,
+     "model_exact_and_over_flag": 1.0,
+     "copy14": 0.00807,
+     "copy4": 0.01366
+    }
+   },
+   "16+": {
+    "all_steps": {
+     "n": 2683,
+     "model_exact": 0.99963,
+     "model_exact_and_over_flag": 0.99963,
+     "copy14": 0.00596,
+     "copy4": 0.00671
+    },
+    "eat_steps": {
+     "n": 240,
+     "model_exact": 1.0,
+     "model_exact_and_over_flag": 1.0,
+     "copy14": 0.0,
+     "copy4": 0.0
+    },
+    "non_eat_steps": {
+     "n": 2443,
+     "model_exact": 0.99959,
+     "model_exact_and_over_flag": 0.99959,
+     "copy14": 0.00655,
+     "copy4": 0.00737
+    }
+   },
+   "16-31": {
+    "all_steps": {
+     "n": 1811,
+     "model_exact": 1.0,
+     "model_exact_and_over_flag": 1.0,
+     "copy14": 0.00497,
+     "copy4": 0.00607
+    },
+    "eat_steps": {
+     "n": 171,
+     "model_exact": 1.0,
+     "model_exact_and_over_flag": 1.0,
+     "copy14": 0.0,
+     "copy4": 0.0
+    },
+    "non_eat_steps": {
+     "n": 1640,
+     "model_exact": 1.0,
+     "model_exact_and_over_flag": 1.0,
+     "copy14": 0.00549,
+     "copy4": 0.00671
+    }
+   },
+   "32-63": {
+    "all_steps": {
+     "n": 872,
+     "model_exact": 0.99885,
+     "model_exact_and_over_flag": 0.99885,
+     "copy14": 0.00803,
+     "copy4": 0.00803
+    },
+    "eat_steps": {
+     "n": 69,
+     "model_exact": 1.0,
+     "model_exact_and_over_flag": 1.0,
+     "copy14": 0.0,
+     "copy4": 0.0
+    },
+    "non_eat_steps": {
+     "n": 803,
+     "model_exact": 0.99875,
+     "model_exact_and_over_flag": 0.99875,
+     "copy14": 0.00872,
+     "copy4": 0.00872
+    }
+   },
+   "64+": {
+    "all_steps": {
+     "n": 0,
+     "model_exact": null,
+     "model_exact_and_over_flag": null,
+     "copy14": null,
+     "copy4": null
+    },
+    "eat_steps": {
+     "n": 0,
+     "model_exact": null,
+     "model_exact_and_over_flag": null,
+     "copy14": null,
+     "copy4": null
+    },
+    "non_eat_steps": {
+     "n": 0,
+     "model_exact": null,
+     "model_exact_and_over_flag": null,
+     "copy14": null,
+     "copy4": null
+    }
+   },
+   "all": {
+    "all_steps": {
+     "n": 10374,
+     "model_exact": 0.99981,
+     "model_exact_and_over_flag": 0.99981,
+     "copy14": 0.00877,
+     "copy4": 0.01359
+    },
+    "eat_steps": {
+     "n": 839,
+     "model_exact": 0.99881,
+     "model_exact_and_over_flag": 0.99881,
+     "copy14": 0.0,
+     "copy4": 0.0
+    },
+    "non_eat_steps": {
+     "n": 9535,
+     "model_exact": 0.9999,
+     "model_exact_and_over_flag": 0.9999,
+     "copy14": 0.00954,
+     "copy4": 0.01479
+    }
+   }
+  },
+  "per_class_error": {
+   "empty": {
+    "cells": 1372399,
+    "pct_wrong_14class": 0.0,
+    "pct_wrong_type_only": 0.0,
+    "pct_wrong_14class_eat_steps": 0.0,
+    "pct_wrong_14class_non_eat_steps": 0.0
+   },
+   "food": {
+    "cells": 9535,
+    "pct_wrong_14class": 0.0,
+    "pct_wrong_type_only": 0.0,
+    "pct_wrong_14class_eat_steps": null,
+    "pct_wrong_14class_non_eat_steps": 0.0
+   },
+   "head": {
+    "cells": 10374,
+    "pct_wrong_14class": 0.0,
+    "pct_wrong_type_only": 0.0,
+    "pct_wrong_14class_eat_steps": 0.0,
+    "pct_wrong_14class_non_eat_steps": 0.0
+   },
+   "body": {
+    "cells": 93518,
+    "pct_wrong_14class": 0.0011,
+    "pct_wrong_type_only": 0.0,
+    "pct_wrong_14class_eat_steps": 0.0,
+    "pct_wrong_14class_non_eat_steps": 0.0012
+   },
+   "tail": {
+    "cells": 8030,
+    "pct_wrong_14class": 0.0125,
+    "pct_wrong_type_only": 0.0125,
+    "pct_wrong_14class_eat_steps": 0.1192,
+    "pct_wrong_14class_non_eat_steps": 0.0
+   }
+  },
+  "game_over": {
+   "n_true": 141,
+   "predicted": 141,
+   "precision": 1.0,
+   "recall": 1.0
+  },
+  "ate_head": {
+   "accuracy": 1.0,
+   "n_eat": 839,
+   "precision": 1.0,
+   "recall": 1.0,
+   "accuracy_if_always_no": 0.91912
+  },
+  "food_head": {
+   "eat_rows_with_spawn": 839,
+   "head_cross_entropy": 4.8794,
+   "uniform_floor_mean_ln_empty": 4.8722,
+   "ce_minus_floor": 0.0072,
+   "mean_prob_mass_on_snake_cells": 0.00648,
+   "spawn_valid_pct_sampled_on_empty_cell": 99.523,
+   "spawn_on_snake_pct": 0.477
+  },
+  "implied_median_from_one_step_p": {
+   "overall_exact": {
+    "p": 0.99981,
+    "median_steps": 3647.8
+   },
+   "non_eat_exact": {
+    "p": 0.9999,
+    "median_steps": 6931.13
+   },
+   "bucket_balanced_exact": {
+    "p": 0.99978,
+    "median_steps": 3114.92
+   }
+  }
+ },
+ "rollout_cap": 1000,
+ "rollout_bfs": {
+  "n": 100,
+  "cap": 1000,
+  "headline": {
+   "mismatched": 3,
+   "matched_to_end": 97,
+   "alive_at_cap_no_mismatch": 0,
+   "kaplan_meier_P_no_mismatch_yet": {
+    "S": {
+     "50": 1.0,
+     "100": 1.0,
+     "200": 0.9855,
+     "500": 0.932,
+     "1000": 0.932
+    },
+    "rollouts_still_observed_at_step": {
+     "50": 96,
+     "100": 86,
+     "200": 65,
+     "500": 1,
+     "1000": 0
+    },
+    "median": "not reached"
+   },
+   "km_note": "a rollout that ends in game over without a mismatch, or reaches the cap, is censored at that step"
+  },
+  "conventions_not_headline": {
+   "note": "median conventions kept for reference only; neither is a headline",
+   "first_mismatch_median_censored_at_end_step": 242.5,
+   "first_mismatch_p10_censored_at_end_step": 84.9,
+   "first_mismatch_median_nomismatch_as_cap_plus_1": 1001.0,
+   "first_mismatch_p10_nomismatch_as_cap_plus_1": 1001.0,
+   "first_invalid_median_censored_at_end_step": 242.5,
+   "first_invalid_p10_censored_at_end_step": 84.9,
+   "implied_median_from_rollout_hazard": 5709.34
+  },
+  "dynamics_invalid": {
+   "rollouts_with_invalid_state": 2,
+   "reasons": {
+    "heads!=1": 1,
+    "wrong_length": 1,
+    "disconnected": 0
+   },
+   "note": "heads != 1, wrong length, disconnected body; food_on_snake is NOT included here"
+  },
+  "food_on_snake": {
+   "eat_events": 2531,
+   "events": 29,
+   "pct_of_eat_events": 1.146,
+   "rollouts_with_event": 27,
+   "note": "sampled from the model's food head and checked against the model's own predicted grid, as the page would write it"
+  },
+  "longest_snake_engine": 57,
+  "longest_snake_model_predicted": 57,
+  "rollouts_engine_length_ge_64": 0,
+  "length_at_first_mismatch": {
+   "median": 31.0,
+   "max": 38
+  },
+  "per_step_accuracy_from_rollouts": 0.99988
+ },
+ "rollout_random_safe": {
+  "n": 100,
+  "cap": 1000,
+  "headline": {
+   "mismatched": 8,
+   "matched_to_end": 78,
+   "alive_at_cap_no_mismatch": 14,
+   "kaplan_meier_P_no_mismatch_yet": {
+    "S": {
+     "50": 0.9573,
+     "100": 0.9274,
+     "200": 0.9108,
+     "500": 0.9108,
+     "1000": 0.8744
+    },
+    "rollouts_still_observed_at_step": {
+     "50": 73,
+     "100": 59,
+     "200": 44,
+     "500": 27,
+     "1000": 14
+    },
+    "median": "not reached"
+   },
+   "km_note": "a rollout that ends in game over without a mismatch, or reaches the cap, is censored at that step"
+  },
+  "conventions_not_headline": {
+   "note": "median conventions kept for reference only; neither is a headline",
+   "first_mismatch_median_censored_at_end_step": 168.0,
+   "first_mismatch_p10_censored_at_end_step": 19.0,
+   "first_mismatch_median_nomismatch_as_cap_plus_1": 1001.0,
+   "first_mismatch_p10_nomismatch_as_cap_plus_1": 1001.0,
+   "first_invalid_median_censored_at_end_step": 168.0,
+   "first_invalid_p10_censored_at_end_step": 19.0,
+   "implied_median_from_rollout_hazard": 2822.5
+  },
+  "dynamics_invalid": {
+   "rollouts_with_invalid_state": 1,
+   "reasons": {
+    "heads!=1": 0,
+    "wrong_length": 1,
+    "disconnected": 0
+   },
+   "note": "heads != 1, wrong length, disconnected body; food_on_snake is NOT included here"
+  },
+  "food_on_snake": {
+   "eat_events": 172,
+   "events": 0,
+   "pct_of_eat_events": 0.0,
+   "rollouts_with_event": 0,
+   "note": "sampled from the model's food head and checked against the model's own predicted grid, as the page would write it"
+  },
+  "longest_snake_engine": 49,
+  "longest_snake_model_predicted": 49,
+  "rollouts_engine_length_ge_64": 0,
+  "length_at_first_mismatch": {
+   "median": 21.0,
+   "max": 49
+  },
+  "per_step_accuracy_from_rollouts": 0.99975
+ },
+ "rollout_all_200": {
+  "n": 200,
+  "cap": 1000,
+  "headline": {
+   "mismatched": 11,
+   "matched_to_end": 175,
+   "alive_at_cap_no_mismatch": 14,
+   "kaplan_meier_P_no_mismatch_yet": {
+    "S": {
+     "50": 0.9792,
+     "100": 0.9666,
+     "200": 0.9515,
+     "500": 0.9257,
+     "1000": 0.8901
+    },
+    "rollouts_still_observed_at_step": {
+     "50": 169,
+     "100": 145,
+     "200": 109,
+     "500": 28,
+     "1000": 14
+    },
+    "median": "not reached"
+   },
+   "km_note": "a rollout that ends in game over without a mismatch, or reaches the cap, is censored at that step"
+  },
+  "conventions_not_headline": {
+   "note": "median conventions kept for reference only; neither is a headline",
+   "first_mismatch_median_censored_at_end_step": 217.5,
+   "first_mismatch_p10_censored_at_end_step": 28.900000000000002,
+   "first_mismatch_median_nomismatch_as_cap_plus_1": 1001.0,
+   "first_mismatch_p10_nomismatch_as_cap_plus_1": 1001.0,
+   "first_invalid_median_censored_at_end_step": 217.5,
+   "first_invalid_p10_censored_at_end_step": 28.900000000000002,
+   "implied_median_from_rollout_hazard": 3609.82
+  },
+  "dynamics_invalid": {
+   "rollouts_with_invalid_state": 3,
+   "reasons": {
+    "heads!=1": 1,
+    "wrong_length": 2,
+    "disconnected": 0
+   },
+   "note": "heads != 1, wrong length, disconnected body; food_on_snake is NOT included here"
+  },
+  "food_on_snake": {
+   "eat_events": 2703,
+   "events": 29,
+   "pct_of_eat_events": 1.073,
+   "rollouts_with_event": 27,
+   "note": "sampled from the model's food head and checked against the model's own predicted grid, as the page would write it"
+  },
+  "longest_snake_engine": 57,
+  "longest_snake_model_predicted": 57,
+  "rollouts_engine_length_ge_64": 0,
+  "length_at_first_mismatch": {
+   "median": 27.0,
+   "max": 49
+  },
+  "per_step_accuracy_from_rollouts": 0.99981
+ },
+ "failure_grids": [
+  {
+   "kind": "bfs",
+   "rollout": 29,
+   "step": 299,
+   "action": 4,
+   "engine_length": 38,
+   "text": "engine (head ^v<>, body arrows, tail T)   model\n............   ............\n............   ............\n............   ............\n............   ............\n............   ............\n\u2193\u2190\u2190\u2190\u2190\u2190......   \u2193\u2190\u2190\u2190\u2190\u2190......\n\u2193\u2192\u2192\u2193.\u2191......   \u2193\u2192\u2192\u2193.\u2191......\n\u2193\u2191\u2190\u2192\u2192\u2191.F....   \u2193\u2191\u2190\u2192\u2192\u2191.F....\n\u2192\u2193\u2191.........   \u2192\u2193\u2191.........\n.\u2193\u2191.......T.   .\u2193\u2191.......T.\n\u2193\u2190\u2191.......\u2193.   \u2193\u2190\u2191.......\u2193.\n\u2192>\u2191\u2190\u2190\u2190\u2190\u2190\u2190\u2190\u2190.   \u2192^\u2191\u2190\u2190\u2190\u2190\u2190\u2190\u2190\u2190."
+  },
+  {
+   "kind": "random",
+   "rollout": 15,
+   "step": 32,
+   "action": 0,
+   "engine_length": 38,
+   "text": "engine (head ^v<>, body arrows, tail T)   model\n............   ............\n.....F......   .....F......\n............   ............\n............   ............\n.........\u2192\u2192\u2193   .........\u2192\u2192\u2193\n...\u2192\u2192\u2192\u2192\u2193.\u2191\u2190\u2193   ...\u2192\u2192\u2192\u2192\u2193.\u2191\u2190\u2193\n..\u2192\u2191...\u2192\u2192\u2192\u2191\u2193   ..\u2192\u2191...\u2192\u2192\u2192\u2191\u2193\n..\u2191.......\u2193\u2190   ..\u2191.......\u2193\u2190\n..\u2191.......\u2193^   ..\u2191.......\u2193^\n.T\u2191.......\u2193\u2191   ..\u2191.......\u2193\u2191\n\u2193\u2190\u2191.......\u2193\u2191   \u2193T\u2191.......\u2193\u2191\n\u2192\u2192\u2191.......\u2192\u2191   \u2192\u2192\u2191.......\u2192\u2191"
+  },
+  {
+   "kind": "random",
+   "rollout": 87,
+   "step": 4,
+   "action": 3,
+   "engine_length": 49,
+   "text": "engine (head ^v<>, body arrows, tail T)   model\n......\u2192\u2192\u2192\u2192\u2193.   ......\u2192\u2192\u2192\u2192\u2193.\n......\u2191\u2190\u2190\u2190\u2193.   ......\u2191\u2190\u2190\u2190\u2193.\n.....\u2192\u2192\u2192\u2192\u2191\u2193.   .....\u2192\u2192\u2193\u2192\u2191\u2193.\n.....\u2191.\u2192>.\u2193.   .....\u2191.\u2192>.\u2193.\n\u2192\u2192\u2193..\u2191.\u2191..\u2193.   \u2192\u2192\u2193..\u2191.\u2191..\u2193.\n\u2191.\u2192\u2192\u2192\u2191.\u2191..\u2193.   \u2191.\u2192\u2192\u2192\u2191.\u2191..\u2193.\n\u2191.F....\u2191\u2190.\u2193.   \u2191.F....\u2191\u2190.\u2193.\n\u2191\u2190......\u2191.\u2193.   \u2191\u2190......\u2191.\u2193.\n.\u2191......\u2191\u2190\u2190.   .\u2191......\u2191\u2190\u2190.\n.\u2191..........   .\u2191..........\n.\u2191..........   .\u2191..........\n.\u2191T.........   .\u2191T........."
+  }
+ ],
+ "seconds": 43.5
+}

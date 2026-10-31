@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Model speed benchmark</title>
+<style>body{font:14px system-ui,sans-serif;margin:16px;max-width:780px}button{font:inherit;padding:6px 12px}
+textarea{width:100%;height:380px;font:12px ui-monospace,monospace}code{background:#8882;padding:0 3px}</style></head>
+<body>
+<h1>Neural Snake: fair speed benchmark (dev tool, not deployed)</h1>
+<p>Loads <code>web/model/snake.onnx</code> and the vendored runtime from <code>web/vendor/</code>. Two separate sessions, each with exactly one execution provider:
+<code>['webgpu']</code> (webgpu bundle) and <code>['wasm']</code> (wasm bundle, 1 thread). Per session: session-create time, 50 warm-up steps (excluded),
+then 500 timed closed-loop steps (model output fed back; food sampled like the game page; game over resets to the start state).</p>
+<p>Order: <a href="?order=webgpu-first">webgpu first</a> (default) · <a href="?order=wasm-first">wasm first</a>. Close other tabs and keep this tab in the foreground.</p>
+<button id="run">Run benchmark</button> <span id="status"></span>
+<p>Copyable result:</p>
+<textarea id="out" readonly></textarea>
+<script type="module" src="./bench_model.js"></script>
+</body></html>

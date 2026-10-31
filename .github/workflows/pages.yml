@@ -1,0 +1,61 @@
+# Test, then deploy ONLY the web/ folder to GitHub Pages.
+#
+# Action versions: latest release of each official action on 2026-10-31, read from the GitHub API
+# (https://api.github.com/repos/actions/<name>/releases/latest):
+#   actions/checkout v7.0.1 | actions/setup-python v7.1.0 | actions/setup-node v7.1.0
+#   actions/configure-pages v6.0.0 | actions/upload-pages-artifact v5.0.0 | actions/deploy-pages v5.0.1
+# The workflow pins the major version of each.
+#
+# One-time repository setting (not done by this file): Settings > Pages > Source = "GitHub Actions".
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      # numpy: tests/test_pipeline.py imports it at collection time. The data, the checkpoint and torch are
+      # not in the repository, so the tests that need them (pipeline, ONNX parity, food-detach) skip.
+      - run: python -m pip install pytest numpy
+      - run: python scripts/audit_web.py
+      - run: node --test tests/js/engine_golden.test.mjs
+      - run: python -m pytest tests -q
+      - run: python scripts/check_readme_numbers.py
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: web
+      - id: deployment
+        uses: actions/deploy-pages@v5
