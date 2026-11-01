@@ -76,7 +76,8 @@ main.wide { max-width: 1040px; }
 .board-inner #banner, .board-inner .over {
   position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center; text-align: center;
   padding: 20px; font-weight: 700; font-size: 18px; line-height: 1.35; color: #fff; pointer-events: none;
-  background: rgba(8, 12, 24, 0.5); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.35); /* a light tint, no blur: the final frame stays readable behind the message */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 12px rgba(0, 0, 0, 0.7); /* keeps the message legible over the visible board */
 }
 .board-inner #banner:empty, .board-inner .over:empty { display: none; }
 .hint { margin: 6px 0 0; text-align: center; color: var(--muted); font-size: 13px; }
